@@ -1,4 +1,4 @@
-package com.zerobase.storeReservation.user;
+package com.zerobase.storeReservation.member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;

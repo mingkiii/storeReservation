@@ -1,4 +1,4 @@
-package com.zerobase.storeReservation.user.domain.Form;
+package com.zerobase.storeReservation.member.domain.Form;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

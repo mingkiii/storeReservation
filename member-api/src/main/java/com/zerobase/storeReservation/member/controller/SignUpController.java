@@ -1,8 +1,8 @@
-package com.zerobase.storeReservation.user.controller;
+package com.zerobase.storeReservation.member.controller;
 
-import com.zerobase.storeReservation.user.domain.Form.SignUpForm;
-import com.zerobase.storeReservation.user.service.PartnerService;
-import com.zerobase.storeReservation.user.service.UserService;
+import com.zerobase.storeReservation.member.domain.Form.SignUpForm;
+import com.zerobase.storeReservation.member.service.PartnerService;
+import com.zerobase.storeReservation.member.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

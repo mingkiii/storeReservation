@@ -1,4 +1,4 @@
-package com.zerobase.storeReservation.user.domain.model;
+package com.zerobase.storeReservation.member.domain.model;
 
 import java.time.LocalDateTime;
 import javax.persistence.EntityListeners;
