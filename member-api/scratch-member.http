@@ -1,0 +1,41 @@
+######## User 일반 회원
+### 회원 가입
+POST http://localhost:8081/signup/user
+Content-Type: application/json
+
+{
+  "email": "string@gamil.com",
+  "name": "홍길동",
+  "password": "string123!",
+  "phone": "01012341234"
+}
+
+### 로그인
+POST http://localhost:8081/signin/user
+Content-Type: application/json
+
+{
+  "email": "string@gamil.com",
+  "password": "string123!"
+}
+
+###### Partner 매장 점주
+### 회원 가입
+POST http://localhost:8081/signup/partner
+Content-Type: application/json
+
+{
+  "email": "string2@gamil.com",
+  "name": "곽두팔",
+  "password": "string123!",
+  "phone": "01012345678"
+}
+
+### 로그인
+POST http://localhost:8081/signin/partner
+Content-Type: application/json
+
+{
+  "email": "string2@gamil.com",
+  "password": "string123!"
+}

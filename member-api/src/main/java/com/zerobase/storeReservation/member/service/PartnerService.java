@@ -3,8 +3,8 @@ package com.zerobase.storeReservation.member.service;
 import static com.zerobase.storeReservation.member.exception.ErrorCode.ALREADY_REGISTER_USER;
 import static com.zerobase.storeReservation.member.exception.ErrorCode.LOGIN_CHECK_FAIL;
 
-import com.zerobase.storeReservation.domain.common.MemberType;
-import com.zerobase.storeReservation.domain.config.JwtAuthenticationProvider;
+import com.zerobase.storeReservation.common.type.MemberType;
+import com.zerobase.storeReservation.common.config.JwtAuthenticationProvider;
 import com.zerobase.storeReservation.member.domain.Form.SignInForm;
 import com.zerobase.storeReservation.member.domain.Form.SignUpForm;
 import com.zerobase.storeReservation.member.domain.model.Partner;

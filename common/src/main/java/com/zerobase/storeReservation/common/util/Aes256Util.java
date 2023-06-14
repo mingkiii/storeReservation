@@ -1,4 +1,4 @@
-package com.zerobase.storeReservation.domain.util;
+package com.zerobase.storeReservation.common.util;
 
 import java.nio.charset.StandardCharsets;
 import javax.crypto.Cipher;

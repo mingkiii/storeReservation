@@ -1,4 +1,4 @@
-package com.zerobase.storeReservation.member.config;
+package com.zerobase.storeReservation.store.config;
 
 import com.zerobase.storeReservation.common.config.JwtAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
@@ -10,4 +10,5 @@ public class JwtConfig {
     public JwtAuthenticationProvider jwtAuthenticationProvider() {
         return new JwtAuthenticationProvider();
     }
+
 }
