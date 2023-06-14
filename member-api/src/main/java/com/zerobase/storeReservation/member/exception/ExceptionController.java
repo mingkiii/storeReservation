@@ -1,4 +1,4 @@
-package com.zerobase.storeReservation.user.exception;
+package com.zerobase.storeReservation.member.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

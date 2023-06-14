@@ -1,6 +1,6 @@
-package com.zerobase.storeReservation.user.domain.model;
+package com.zerobase.storeReservation.member.domain.model;
 
-import com.zerobase.storeReservation.user.domain.Form.SignUpForm;
+import com.zerobase.storeReservation.member.domain.Form.SignUpForm;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +22,7 @@ import org.hibernate.envers.AuditOverride;
 @NoArgsConstructor
 @AllArgsConstructor
 @AuditOverride(forClass = BaseEntity.class)
-public class Partner extends BaseEntity{
+public class User extends BaseEntity{
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,8 +44,8 @@ public class Partner extends BaseEntity{
     @Pattern(regexp = "^010\\d{8,9}$", message = "'-' 빼고 010으로 시작하는 10~11자리 숫자로 작성 해주세요.")
     private String phone;
 
-    public static Partner from(SignUpForm form) {
-        return Partner.builder()
+    public static User from(SignUpForm form) {
+        return User.builder()
             .email(form.getEmail())
             .name(form.getName())
             .password(form.getPassword())
