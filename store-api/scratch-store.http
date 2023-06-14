@@ -1,0 +1,10 @@
+####### Partner store 등록
+POST http://localhost:8082/partner/store
+Content-Type: application/json
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3WDRWMTE0YlZlYjlrRGg5Q1JpTXc0OXI3eHVVc2krdjI3OWRVeVc2UGJnPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4Njc1NDIwNCwiZXhwIjoxNjg2ODQwNjA0fQ.c3DZ4ozDRnV7QOKhD6BtyRLcEzaDtfpuZMV0TK9NMyA
+
+{
+  "address": "서울시 강남",
+  "name": "삼겹살집",
+  "text": "삼겹살 전문점"
+}

@@ -3,7 +3,7 @@ plugins {
     id 'org.springframework.boot' version '2.6.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
-group 'com.zerobase.storeReservation.user'
+group 'com.zerobase.storeReservation.member'
 version '0.0.1-SNAPSHOT'
 
 configurations {
@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(':zero-domain')
+    implementation project(':common')
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'

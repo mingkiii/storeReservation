@@ -24,7 +24,6 @@ import org.hibernate.envers.AuditOverride;
 @AuditOverride(forClass = BaseEntity.class)
 public class Partner extends BaseEntity{
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

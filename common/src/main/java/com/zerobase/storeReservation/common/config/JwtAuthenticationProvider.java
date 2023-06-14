@@ -1,18 +1,20 @@
-package com.zerobase.storeReservation.domain.config;
+package com.zerobase.storeReservation.common.config;
 
-import com.zerobase.storeReservation.domain.common.MemberType;
-import com.zerobase.storeReservation.domain.common.MemberVo;
-import com.zerobase.storeReservation.domain.util.Aes256Util;
+import com.zerobase.storeReservation.common.type.MemberType;
+import com.zerobase.storeReservation.common.type.MemberVo;
+import com.zerobase.storeReservation.common.util.Aes256Util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 import java.util.Objects;
+import org.springframework.beans.factory.annotation.Value;
 
 public class JwtAuthenticationProvider {
 
-    private final String secretKey = "secretKey";
+    @Value("${jwt.secret}")
+    String secretKey;
 
     private final long tokenValidTime = 1000L * 60 * 60 * 24; // 하루
 
@@ -49,5 +51,4 @@ public class JwtAuthenticationProvider {
             Aes256Util.decrypt(claims.getSubject())
         );
     }
-
 }

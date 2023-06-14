@@ -1,7 +1,7 @@
 package com.zerobase.storeReservation.member.config.filter;
 
-import com.zerobase.storeReservation.domain.common.MemberVo;
-import com.zerobase.storeReservation.domain.config.JwtAuthenticationProvider;
+import com.zerobase.storeReservation.common.type.MemberVo;
+import com.zerobase.storeReservation.common.config.JwtAuthenticationProvider;
 import com.zerobase.storeReservation.member.service.PartnerService;
 import java.io.IOException;
 import javax.servlet.Filter;

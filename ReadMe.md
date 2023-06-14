@@ -11,8 +11,8 @@ Use : Spring, Jpa, Mysql
 
 ## Store api
 ### partner
-- [ ] 상점 등록
-### 공통
+- [x] 상점 등록
+### user
 - [ ] 상점 검색
 - [ ] 상점 상세 정보 확인
 - [ ] 상점 예약 목록 보기

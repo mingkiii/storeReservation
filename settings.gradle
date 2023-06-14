@@ -1,4 +1,5 @@
 rootProject.name = 'storeReservation'
 include 'member-api'
-include 'zero-domain'
+include 'common'
+include 'store-api'
 
