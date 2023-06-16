@@ -4,7 +4,7 @@ POST http://localhost:8081/signup/user
 Content-Type: application/json
 
 {
-  "email": "string@gamil.com",
+  "email": "string22@gamil.com",
   "name": "홍길동",
   "password": "string123!",
   "phone": "01012341234"
@@ -15,7 +15,7 @@ POST http://localhost:8081/signin/user
 Content-Type: application/json
 
 {
-  "email": "string@gamil.com",
+  "email": "string22@gamil.com",
   "password": "string123!"
 }
 
@@ -25,7 +25,7 @@ POST http://localhost:8081/signup/partner
 Content-Type: application/json
 
 {
-  "email": "string2@gamil.com",
+  "email": "string3@gamil.com",
   "name": "곽두팔",
   "password": "string123!",
   "phone": "01012345678"
@@ -36,6 +36,6 @@ POST http://localhost:8081/signin/partner
 Content-Type: application/json
 
 {
-  "email": "string2@gamil.com",
+  "email": "string3@gamil.com",
   "password": "string123!"
 }

@@ -51,4 +51,10 @@ public class JwtAuthenticationProvider {
             Aes256Util.decrypt(claims.getSubject())
         );
     }
+
+    public MemberType getMemberType(String token) {
+        Claims claims = Jwts.parser().setSigningKey(secretKey)
+            .parseClaimsJws(token).getBody();
+        return MemberType.valueOf(claims.get("roles", String.class));
+    }
 }
