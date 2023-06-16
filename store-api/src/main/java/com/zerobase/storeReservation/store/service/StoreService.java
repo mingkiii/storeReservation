@@ -1,9 +1,11 @@
 package com.zerobase.storeReservation.store.service;
 
+import static com.zerobase.storeReservation.store.exception.ErrorCode.NOT_FOUND_STORE;
 import static com.zerobase.storeReservation.store.exception.ErrorCode.SAME_STORE_NAME;
 import static com.zerobase.storeReservation.store.exception.ErrorCode.WRONG_ADDRESS;
 
 import com.zerobase.storeReservation.store.domain.dto.StoreDto;
+import com.zerobase.storeReservation.store.domain.dto.StoreInfoDto;
 import com.zerobase.storeReservation.store.domain.form.AddStoreForm;
 import com.zerobase.storeReservation.store.domain.model.Store;
 import com.zerobase.storeReservation.store.domain.repository.StoreRepository;
@@ -48,5 +50,12 @@ public class StoreService {
 
         return storeRepository.getNearbyStores(
             latitude, longitude, maxDistance, page, pageSize, sort);
+    }
+
+    public StoreInfoDto getStoreDetails(Long storeId) {
+        Store store = storeRepository.findById(storeId)
+            .orElseThrow(() -> new CustomException(NOT_FOUND_STORE));
+
+        return StoreInfoDto.from(store);
     }
 }
