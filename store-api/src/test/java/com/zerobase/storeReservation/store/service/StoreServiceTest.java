@@ -13,6 +13,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.zerobase.storeReservation.store.domain.dto.StoreDto;
+import com.zerobase.storeReservation.store.domain.dto.StoreInfoDto;
 import com.zerobase.storeReservation.store.domain.form.AddStoreForm;
 import com.zerobase.storeReservation.store.domain.model.Store;
 import com.zerobase.storeReservation.store.domain.repository.StoreRepository;
@@ -103,6 +104,7 @@ class StoreServiceTest {
     }
 
     @Test
+    @DisplayName("요청 주소의 주변 상점 목록 불러오기 - 거리순")
     public void testGetNearbyStoresOrderByDistance() {
         // Given
         String address = "인계동 1110";
@@ -141,5 +143,35 @@ class StoreServiceTest {
         assertEquals("Store 1", result.getContent().get(0).getName());
         verify(storeRepository).getNearbyStores(anyDouble(), anyDouble(),
             anyDouble(), anyInt(), anyInt(), any(Sort.class));
+    }
+
+    @Test
+    void testGetStoreDetails() {
+        // Given
+        Long storeId = 1L;
+        Store fakeStore = Store.builder()
+            .id(storeId)
+            .name("Store 1")
+            .address("서울시 강남구")
+            .text("한우 전문점")
+            .rating(4.5)
+            .reviewCount(100L)
+            .build();
+
+        when(storeRepository.findById(storeId)).thenReturn(Optional.of(fakeStore));
+
+        // When
+        StoreInfoDto result = storeService.getStoreDetails(storeId);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(fakeStore.getId(), result.getId());
+        assertEquals(fakeStore.getName(), result.getName());
+        assertEquals(fakeStore.getAddress(), result.getAddress());
+        assertEquals(fakeStore.getText(), result.getText());
+        assertEquals(fakeStore.getRating(), result.getRating(), 0.01);
+        assertEquals(fakeStore.getReviewCount(), result.getReviewCount());
+
+        verify(storeRepository).findById(storeId);
     }
 }

@@ -4,11 +4,15 @@ Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZHFFeEN6VC9mNEtEZWhIVnluM2tlYWx3Nkd1VlVqdi81MFQwUDdrVStvPSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NjkwMDAzMiwiZXhwIjoxNjg2OTg2NDMyfQ.GWfwjV4a9t7IYXqIR-TP83bygqswcJoYp2MazfCj3NQ
 
 {
-  "address": "인계동 1117",
+  "address": "인계동 1110",
   "name": "fString2",
   "text": "전문점1"
 }
 
 ##### 공통 Search Store
 GET http://localhost:8082/store/search?address=인계동 1100&maxDistance=1000&sort=distance
+Content-Type: application/json
+
+##### 공통 Store info
+GET http://localhost:8082/store?id=1
 Content-Type: application/json

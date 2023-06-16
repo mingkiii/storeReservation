@@ -1,6 +1,7 @@
 package com.zerobase.storeReservation.store.controller;
 
 import com.zerobase.storeReservation.store.domain.dto.StoreDto;
+import com.zerobase.storeReservation.store.domain.dto.StoreInfoDto;
 import com.zerobase.storeReservation.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,5 +33,10 @@ public class StoreController {
                 address, maxDistance, page, pageSize, sort
             )
         );
+    }
+
+    @GetMapping
+    public ResponseEntity<StoreInfoDto> getStoreDetails(@RequestParam("id") Long storeId) {
+        return ResponseEntity.ok(storeService.getStoreDetails(storeId));
     }
 }

@@ -14,7 +14,7 @@ Use : Spring, Jpa, Mysql
 - [x] 상점 등록
 ### user
 - [x] 상점 검색
-- [ ] 상점 상세 정보 확인
+- [x] 상점 상세 정보 확인
 - [ ] 상점 예약 목록 보기
 
 ## Reservation api
