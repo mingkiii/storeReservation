@@ -1,8 +1,12 @@
 package com.zerobase.storeReservation.store.controller;
 
+import static com.zerobase.storeReservation.store.exception.ErrorCode.WRONG_ACCESS;
+
 import com.zerobase.storeReservation.common.config.JwtAuthenticationProvider;
-import com.zerobase.storeReservation.store.domain.AddStoreForm;
-import com.zerobase.storeReservation.store.domain.StoreDto;
+import com.zerobase.storeReservation.common.type.MemberType;
+import com.zerobase.storeReservation.store.domain.form.AddStoreForm;
+import com.zerobase.storeReservation.store.domain.dto.StoreDto;
+import com.zerobase.storeReservation.store.exception.CustomException;
 import com.zerobase.storeReservation.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +29,10 @@ public class PartnerStoreController {
         @RequestHeader(name = "X-AUTH-TOKEN") String token,
         @RequestBody AddStoreForm form
     ) {
+        MemberType memberType = provider.getMemberType(token);
+        if (memberType == MemberType.USER) {
+            throw new CustomException(WRONG_ACCESS);
+        }
         return ResponseEntity.ok(
             StoreDto.from(
                 storeService.addStore(
