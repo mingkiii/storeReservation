@@ -12,14 +12,14 @@ Use : Spring, Jpa, Mysql
 ## Store api
 ### partner
 - [x] 상점 등록
-### user
+### 공통
 - [x] 상점 검색
 - [x] 상점 상세 정보 확인
 - [ ] 상점 예약 목록 보기
 
 ## Reservation api
 ### user
-- [ ] 예약 요청
+- [x] 예약 요청
 ### partner
 - [ ] 예약자 방문 확인(키오스크)
 - [ ] 예약 승인, 거절

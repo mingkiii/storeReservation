@@ -1,5 +1,5 @@
 rootProject.name = 'storeReservation'
 include 'member-api'
 include 'common'
-include 'store-api'
+include 'reservation-api'
 
