@@ -3,8 +3,8 @@ package com.zerobase.storeReservation.member.service;
 import static com.zerobase.storeReservation.member.exception.ErrorCode.ALREADY_REGISTER_USER;
 import static com.zerobase.storeReservation.member.exception.ErrorCode.LOGIN_CHECK_FAIL;
 
-import com.zerobase.storeReservation.common.type.MemberType;
 import com.zerobase.storeReservation.common.config.JwtAuthenticationProvider;
+import com.zerobase.storeReservation.common.type.MemberType;
 import com.zerobase.storeReservation.member.domain.Form.SignInForm;
 import com.zerobase.storeReservation.member.domain.Form.SignUpForm;
 import com.zerobase.storeReservation.member.domain.model.User;
@@ -46,5 +46,9 @@ public class UserService {
 
     private boolean isEmailExist(String email) {
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
     }
 }

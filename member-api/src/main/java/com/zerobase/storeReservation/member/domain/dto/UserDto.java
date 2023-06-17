@@ -1,6 +1,6 @@
 package com.zerobase.storeReservation.member.domain.dto;
 
-import com.zerobase.storeReservation.member.domain.model.Partner;
+import com.zerobase.storeReservation.member.domain.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,19 +10,19 @@ import lombok.Setter;
 @Setter
 @Builder
 @AllArgsConstructor
-public class PartnerDto {
+public class UserDto {
 
     private Long id;
     private String name;
     private String email;
     private String phone;
 
-    public static PartnerDto from(Partner partner) {
-        return PartnerDto.builder()
-            .id(partner.getId())
-            .name(partner.getName())
-            .email(partner.getEmail())
-            .phone(partner.getPhone())
+    public static UserDto from(User user) {
+        return UserDto.builder()
+            .id(user.getId())
+            .name(user.getName())
+            .email(user.getEmail())
+            .phone(user.getPhone())
             .build();
     }
 }

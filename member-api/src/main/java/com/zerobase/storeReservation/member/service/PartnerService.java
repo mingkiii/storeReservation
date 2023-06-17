@@ -47,4 +47,8 @@ public class PartnerService {
     private boolean isEmailExist(String email) {
         return partnerRepository.findByEmail(email).isPresent();
     }
+
+    public Optional<Partner> findById(Long id) {
+        return partnerRepository.findById(id);
+    }
 }
