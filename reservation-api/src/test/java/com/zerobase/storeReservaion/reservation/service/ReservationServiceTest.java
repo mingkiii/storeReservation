@@ -16,7 +16,6 @@ import com.zerobase.storeReservaion.reservation.domain.repository.ReservationRep
 import com.zerobase.storeReservaion.reservation.domain.repository.StoreRepository;
 import com.zerobase.storeReservaion.reservation.exception.CustomException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -45,7 +44,6 @@ class ReservationServiceTest {
             .build();
         Store store = Store.builder()
             .id(1L)
-            .reservations(new ArrayList<>())
             .build();
 
         when(storeRepository.findById(form.getStoreId())).thenReturn(
@@ -66,7 +64,6 @@ class ReservationServiceTest {
                 any(Store.class));
         verify(reservationRepository, times(1))
             .save(any(Reservation.class));
-        assertEquals(1, store.getReservations().size());
         assertEquals("예약 신청 완료. 승인 후 이용 가능합니다.", result);
     }
 
@@ -80,7 +77,6 @@ class ReservationServiceTest {
             .build();
         Store store = Store.builder()
             .id(1L)
-            .reservations(new ArrayList<>())
             .build();
 
         long maxCount = 2; // 예약 건수가 2개 (최대 예약 건수에 도달)
@@ -90,7 +86,7 @@ class ReservationServiceTest {
             reservationRepository.countByDateTimeGreaterThanAndDateTimeLessThanAndStore(
                 any(LocalDateTime.class), any(LocalDateTime.class),
                 any(Store.class))
-        ).thenReturn(maxCount+1);
+        ).thenReturn(maxCount);
 
         // When
         CustomException exception = assertThrows(CustomException.class,
@@ -105,6 +101,4 @@ class ReservationServiceTest {
 
         assertEquals(REQUEST_FAIL_FULL_RESERVATION, exception.getErrorCode());
     }
-
-
 }

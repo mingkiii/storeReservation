@@ -28,6 +28,6 @@ Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJRRFcvQjJ6M2w2NlJpZWNNOHpYbEtTZkxWaTNqalhIdjN1YVVHazlLWHJzPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzAwNzU4MCwiZXhwIjoxNjg3MDkzOTgwfQ.RnsTeJ15S9tb08yLf4XDcC3S5uZ7PLZuYfuuaINauuM
 
 {
-  "dateTime": "2023-06-17 14:20",
+  "dateTime": "2023-06-17 09:10",
   "storeId": 1
 }

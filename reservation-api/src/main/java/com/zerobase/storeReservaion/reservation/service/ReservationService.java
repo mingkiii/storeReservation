@@ -34,13 +34,11 @@ public class ReservationService {
         LocalDateTime endDateTime = requestedDateTime.plusHours(1);
 
         long count = reservationRepository.countByDateTimeGreaterThanAndDateTimeLessThanAndStore(startDateTime, endDateTime, store);
-        if (count > MAX_RESERVATION_COUNT) {
+        if (count == MAX_RESERVATION_COUNT) {
             throw new CustomException(REQUEST_FAIL_FULL_RESERVATION);
         }
-        Reservation reservation = Reservation.of(userId, requestedDateTime, store);
-        store.getReservations().add(reservation);
 
-        reservationRepository.save(reservation);
+        reservationRepository.save(Reservation.of(userId, requestedDateTime, store));
 
         return "예약 신청 완료. 승인 후 이용 가능합니다.";
     }
