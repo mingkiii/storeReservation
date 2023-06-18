@@ -18,7 +18,7 @@ Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJRRFcvQjJ6M2w2NlJpZWNNOHpYbEtTZkxWaTNqalhIdjN1YVVHazlLWHJzPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzAwNzU4MCwiZXhwIjoxNjg3MDkzOTgwfQ.RnsTeJ15S9tb08yLf4XDcC3S5uZ7PLZuYfuuaINauuM
 
 {
-  "dateTime": "2023-06-18 15:50",
+  "dateTime": "2023-06-18 20:30",
   "storeId": 1
 }
 
@@ -38,3 +38,7 @@ X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZHFFeEN6VC9mNEtEZWhIVnluM2tlYWx3Nk
 PUT http://localhost:8082/partner/reservation?id=1
 Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZHFFeEN6VC9mNEtEZWhIVnluM2tlYWx3Nkd1VlVqdi81MFQwUDdrVStvPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzAwNzU0NiwiZXhwIjoxNjg3MDkzOTQ2fQ.OR91cuYB3NoehSej104V5Lb7D7a1nMZCJ9BYq_bPcyQ
+
+### kiosk - checkValidReservation 체크인 가능한 예약 정보인지 확인
+PUT http://localhost:8082/partner/1/checkin?id=1
+Content-Type: application/json

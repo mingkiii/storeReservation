@@ -7,8 +7,10 @@ import com.zerobase.storeReservaion.reservation.exception.CustomException;
 import com.zerobase.storeReservaion.reservation.service.ReservationService;
 import com.zerobase.storeReservation.common.config.JwtAuthenticationProvider;
 import com.zerobase.storeReservation.common.type.MemberType;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,5 +40,16 @@ public class PartnerReservationController {
         return ResponseEntity.ok(
             reservationService.changeReservationApproval(
                 provider.getMemberVo(token).getId(), reservationId));
+    }
+
+    @PutMapping("/{storeId}/checkin")
+    public ResponseEntity<String> checkValidReservation(
+        @PathVariable Long storeId,
+        @RequestParam("id") Long reservationId
+    ) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        return ResponseEntity.ok(
+            reservationService.checkValidReservation(reservationId, storeId, currentTime)
+        );
     }
 }

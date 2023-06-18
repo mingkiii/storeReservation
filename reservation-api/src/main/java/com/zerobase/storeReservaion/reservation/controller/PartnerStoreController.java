@@ -2,7 +2,7 @@ package com.zerobase.storeReservaion.reservation.controller;
 
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.WRONG_ACCESS;
 
-import com.zerobase.storeReservaion.reservation.domain.dto.StoreDto;
+import com.zerobase.storeReservaion.reservation.domain.dto.StoreInfoDto;
 import com.zerobase.storeReservaion.reservation.domain.form.AddStoreForm;
 import com.zerobase.storeReservaion.reservation.exception.CustomException;
 import com.zerobase.storeReservaion.reservation.service.StoreService;
@@ -25,7 +25,7 @@ public class PartnerStoreController {
     private final JwtAuthenticationProvider provider;
 
     @PostMapping
-    public ResponseEntity<StoreDto> addStore(
+    public ResponseEntity<StoreInfoDto> addStore(
         @RequestHeader(name = "X-AUTH-TOKEN") String token,
         @RequestBody AddStoreForm form
     ) {
@@ -34,7 +34,7 @@ public class PartnerStoreController {
             throw new CustomException(WRONG_ACCESS);
         }
         return ResponseEntity.ok(
-            StoreDto.from(
+            StoreInfoDto.from(
                 storeService.addStore(
                     provider.getMemberVo(token).getId(), form)));
     }
