@@ -18,12 +18,14 @@ public class ReservationDto {
     private Long id;
     private Store store;
     private LocalDateTime dateTime;
+    private boolean approval;
 
     public static ReservationDto from(Reservation reservation) {
         return ReservationDto.builder()
             .id(reservation.getId())
             .store(reservation.getStore())
             .dateTime(reservation.getDateTime())
+            .approval(reservation.isApproval())
             .build();
     }
 }
