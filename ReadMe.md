@@ -9,23 +9,16 @@ Use : Spring, Jpa, Mysql
 - [x] 회원 가입
 - [x] 로그인 토큰 발행 (JWT, filter 사용)
 
-## Store api
-### partner
-- [x] 상점 등록
+## Reservation api
 ### 공통
 - [x] 상점 검색
 - [x] 상점 상세 정보 확인
 - [x] 상점 예약 목록 보기
-
-## Reservation api
+- [ ] review 조회
 ### user
 - [x] 예약 요청
-### partner
-- [ ] 예약자 방문 확인(키오스크)
-- [ ] 예약 승인, 거절
-
-## Review api
-### user
 - [ ] review 작성
-### 공통
-- [ ] review 조회
+### partner
+- [x] 상점 등록
+- [x] 예약 승인, 거절
+- [ ] 예약자 방문 확인(키오스크)
