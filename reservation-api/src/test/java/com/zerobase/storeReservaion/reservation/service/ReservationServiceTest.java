@@ -4,6 +4,7 @@ import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.REQUE
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -16,6 +17,8 @@ import com.zerobase.storeReservaion.reservation.domain.repository.ReservationRep
 import com.zerobase.storeReservaion.reservation.domain.repository.StoreRepository;
 import com.zerobase.storeReservaion.reservation.exception.CustomException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -100,5 +103,35 @@ class ReservationServiceTest {
         verify(reservationRepository, never()).save(any());
 
         assertEquals(REQUEST_FAIL_FULL_RESERVATION, exception.getErrorCode());
+    }
+
+    @Test
+    void getStoreReservations() {
+        //Given
+        Long storeId = 1L;
+        Store store = Store.builder()
+            .id(storeId)
+            .name("Store 1")
+            .build();
+        Reservation reservation1 = Reservation.builder()
+            .id(1L)
+            .store(store)
+            .dateTime(LocalDateTime.of(2023, 6,17, 12,0))
+            .build();
+        Reservation reservation2 = Reservation.builder()
+            .id(2L)
+            .store(store)
+            .dateTime(LocalDateTime.of(2023, 6,17, 14,0))
+            .build();
+        List<Reservation> reservations = new ArrayList<>();
+        reservations.add(reservation1);
+        reservations.add(reservation2);
+
+        when(storeRepository.findById(anyLong())).thenReturn(Optional.ofNullable(store));
+        when(reservationRepository.findByStoreOrderByDateTime(store)).thenReturn(reservations);
+        //When
+        List<Reservation> result = reservationService.getStoreReservations(storeId);
+        //Then
+        assertEquals(reservations, result);
     }
 }

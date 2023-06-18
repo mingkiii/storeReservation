@@ -19,6 +19,9 @@ Content-Type: application/json
 GET http://localhost:8082/store/getInfo?id=1
 Content-Type: application/json
 
+### Store reservation List
+GET http://localhost:8082/store/reservations?id=1
+Content-Type: application/json
 
 
 ######## User
@@ -28,6 +31,6 @@ Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJRRFcvQjJ6M2w2NlJpZWNNOHpYbEtTZkxWaTNqalhIdjN1YVVHazlLWHJzPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzAwNzU4MCwiZXhwIjoxNjg3MDkzOTgwfQ.RnsTeJ15S9tb08yLf4XDcC3S5uZ7PLZuYfuuaINauuM
 
 {
-  "dateTime": "2023-06-17 09:10",
+  "dateTime": "2023-06-18 14:50",
   "storeId": 1
 }
