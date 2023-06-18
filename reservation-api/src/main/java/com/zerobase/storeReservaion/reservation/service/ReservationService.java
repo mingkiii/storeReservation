@@ -11,6 +11,7 @@ import com.zerobase.storeReservaion.reservation.domain.repository.StoreRepositor
 import com.zerobase.storeReservaion.reservation.exception.CustomException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +42,11 @@ public class ReservationService {
         reservationRepository.save(Reservation.of(userId, requestedDateTime, store));
 
         return "예약 신청 완료. 승인 후 이용 가능합니다.";
+    }
+
+    public List<Reservation> getStoreReservations(Long storeId) {
+        Store store = storeRepository.findById(storeId)
+            .orElseThrow(() -> new CustomException(NOT_FOUND_STORE));
+        return reservationRepository.findByStoreOrderByDateTime(store);
     }
 }

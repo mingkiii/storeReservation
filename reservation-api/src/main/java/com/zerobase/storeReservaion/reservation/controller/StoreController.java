@@ -1,8 +1,12 @@
 package com.zerobase.storeReservaion.reservation.controller;
 
+import com.zerobase.storeReservaion.reservation.domain.dto.ReservationDto;
 import com.zerobase.storeReservaion.reservation.domain.dto.StoreDto;
 import com.zerobase.storeReservaion.reservation.domain.dto.StoreInfoDto;
+import com.zerobase.storeReservaion.reservation.service.ReservationService;
 import com.zerobase.storeReservaion.reservation.service.StoreService;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class StoreController {
     private final StoreService storeService;
+    private final ReservationService reservationService;
 
     @GetMapping("/search")
     public ResponseEntity<Page<StoreDto>> getNearStores(
@@ -36,7 +41,19 @@ public class StoreController {
     }
 
     @GetMapping("/getInfo")
-    public ResponseEntity<StoreInfoDto> getStoreDetails(@RequestParam("id") Long storeId) {
+    public ResponseEntity<StoreInfoDto> getStoreDetails(
+        @RequestParam("id") Long storeId
+    ) {
         return ResponseEntity.ok(storeService.getStoreDetails(storeId));
+    }
+
+    @GetMapping("/reservations")
+    public ResponseEntity<List<ReservationDto>> getStoreReservations(
+        @RequestParam("id") Long storeId
+    ) {
+        return ResponseEntity.ok(
+            reservationService.getStoreReservations(storeId).stream()
+                .map(ReservationDto::from).collect(Collectors.toList())
+        );
     }
 }
