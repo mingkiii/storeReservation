@@ -15,18 +15,28 @@ Content-Type: application/json
 ### 예약 요청
 POST http://localhost:8082/user/reservation
 Content-Type: application/json
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJRRFcvQjJ6M2w2NlJpZWNNOHpYbEtTZkxWaTNqalhIdjN1YVVHazlLWHJzPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzAwNzU4MCwiZXhwIjoxNjg3MDkzOTgwfQ.RnsTeJ15S9tb08yLf4XDcC3S5uZ7PLZuYfuuaINauuM
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJRRFcvQjJ6M2w2NlJpZWNNOHpYbEtTZkxWaTNqalhIdjN1YVVHazlLWHJzPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzA5ODM5OCwiZXhwIjoxNjg3MTg0Nzk4fQ.nrHHediUFLewl43GNDBwLG0L0E4zwLgWdnPEWXvVPos
 
 {
-  "dateTime": "2023-06-18 20:30",
+  "dateTime": "2023-06-19 15:30",
   "storeId": 1
+}
+
+### 리뷰 등록
+POST http://localhost:8082/user/reservation/review?id=3
+Content-Type: application/json
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJRRFcvQjJ6M2w2NlJpZWNNOHpYbEtTZkxWaTNqalhIdjN1YVVHazlLWHJzPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzA5ODM5OCwiZXhwIjoxNjg3MTg0Nzk4fQ.nrHHediUFLewl43GNDBwLG0L0E4zwLgWdnPEWXvVPos
+
+{
+  "rating": 3.0,
+  "text": "test review"
 }
 
 ####### Partner
 ### store 등록
 POST http://localhost:8082/partner/store
 Content-Type: application/json
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZHFFeEN6VC9mNEtEZWhIVnluM2tlYWx3Nkd1VlVqdi81MFQwUDdrVStvPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzAwNzU0NiwiZXhwIjoxNjg3MDkzOTQ2fQ.OR91cuYB3NoehSej104V5Lb7D7a1nMZCJ9BYq_bPcyQ
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZHFFeEN6VC9mNEtEZWhIVnluM2tlYWx3Nkd1VlVqdi81MFQwUDdrVStvPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzA5ODQxNywiZXhwIjoxNjg3MTg0ODE3fQ.YFzLjUPcQWZ4XcunNvxMJBEiMaRpsCHSQnPTRT7VDJI
 
 {
   "address": "인계동 1119",
@@ -35,10 +45,10 @@ X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZHFFeEN6VC9mNEtEZWhIVnluM2tlYWx3Nk
 }
 
 ### reservation 승인 상태 변경
-PUT http://localhost:8082/partner/reservation?id=1
+PUT http://localhost:8082/partner/reservation?id=3
 Content-Type: application/json
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZHFFeEN6VC9mNEtEZWhIVnluM2tlYWx3Nkd1VlVqdi81MFQwUDdrVStvPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzAwNzU0NiwiZXhwIjoxNjg3MDkzOTQ2fQ.OR91cuYB3NoehSej104V5Lb7D7a1nMZCJ9BYq_bPcyQ
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZHFFeEN6VC9mNEtEZWhIVnluM2tlYWx3Nkd1VlVqdi81MFQwUDdrVStvPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzA5ODQxNywiZXhwIjoxNjg3MTg0ODE3fQ.YFzLjUPcQWZ4XcunNvxMJBEiMaRpsCHSQnPTRT7VDJI
 
 ### kiosk - checkValidReservation 체크인 가능한 예약 정보인지 확인
-PUT http://localhost:8082/partner/1/checkin?id=1
+PUT http://localhost:8082/partner/1/checkin?id=3
 Content-Type: application/json

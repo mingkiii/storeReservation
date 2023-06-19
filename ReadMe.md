@@ -17,7 +17,7 @@ Use : Spring, Jpa, Mysql
 - [ ] review 조회
 ### user
 - [x] 예약 요청
-- [ ] review 작성
+- [x] review 작성
 ### partner
 - [x] 상점 등록
 - [x] 예약 승인, 거절
