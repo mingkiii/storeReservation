@@ -29,30 +29,33 @@ public class UserReservationController {
     private final ReviewService reviewService;
 
     @PostMapping
-    public ResponseEntity<String> requestReservation(
+    public ResponseEntity<String> requestReservation( // 유저 - 예약 요청
         @RequestHeader(name = TOKEN) String token,
         @RequestBody ReservationForm form
     ) {
-        if (token.isEmpty()) {
-            throw new CustomException(LOGIN_REQUIRED);
-        }
-        MemberType memberType = provider.getMemberType(token);
-        if (memberType != MemberType.USER) {
-            throw new CustomException(WRONG_ACCESS);
-        }
+        validateToken(token);
         return ResponseEntity.ok(
             reservationService.request(
-                provider.getMemberVo(token).getId(), form
+                getMemberId(token), form
             )
         );
     }
 
-    @PostMapping("/review")
+    @PostMapping("/review") // 유저 - 리뷰 작성
     public ResponseEntity<String> createReview(
         @RequestHeader(name = TOKEN) String token,
         @RequestParam("id") Long reservationId,
         @RequestBody ReviewForm form
     ) {
+        validateToken(token);
+        return ResponseEntity.ok(
+            reviewService.create(
+                getMemberId(token), token, reservationId, form
+            )
+        );
+    }
+
+    private void validateToken(String token) {
         if (token.isEmpty()) {
             throw new CustomException(LOGIN_REQUIRED);
         }
@@ -60,10 +63,9 @@ public class UserReservationController {
         if (memberType != MemberType.USER) {
             throw new CustomException(WRONG_ACCESS);
         }
-        return ResponseEntity.ok(
-            reviewService.create(
-                provider.getMemberVo(token).getId(), token, reservationId, form
-            )
-        );
+    }
+
+    private Long getMemberId(String token) {
+        return provider.getMemberVo(token).getId();
     }
 }

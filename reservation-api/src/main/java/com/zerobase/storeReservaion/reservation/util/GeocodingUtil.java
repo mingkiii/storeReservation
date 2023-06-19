@@ -14,6 +14,10 @@ import java.nio.charset.StandardCharsets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * open api(국토교통부에서 제공하는 오픈 api)
+ * 주소를 위도, 경도로 변환
+ */
 @Configuration
 public class GeocodingUtil {
     private static final String API_URL =
@@ -43,8 +47,8 @@ public class GeocodingUtil {
             JsonObject jsPoint = (JsonObject) jsResult.get("point");
 
             double[] coords = new double[2];
-            coords[0] = jsPoint.get("y").getAsFloat();
-            coords[1] = jsPoint.get("x").getAsFloat();
+            coords[0] = jsPoint.get("y").getAsFloat(); // 위도
+            coords[1] = jsPoint.get("x").getAsFloat(); // 경도
 
             return coords;
         } catch (IOException e) {

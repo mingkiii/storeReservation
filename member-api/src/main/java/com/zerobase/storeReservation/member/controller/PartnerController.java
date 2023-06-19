@@ -25,7 +25,7 @@ public class PartnerController {
     private final JwtAuthenticationProvider provider;
 
     @GetMapping("/getInfo")
-    public ResponseEntity<PartnerDto> getInfo(
+    public ResponseEntity<PartnerDto> getInfo( // 파트너 상세 정보 조회
         @RequestHeader(name = TOKEN) String token
     ) {
         MemberVo memberVo = provider.getMemberVo(token);

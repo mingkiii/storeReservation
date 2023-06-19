@@ -16,9 +16,9 @@ public class JwtAuthenticationProvider {
     @Value("${jwt.secret}")
     String secretKey;
 
-    private final long tokenValidTime = 1000L * 60 * 60 * 24; // 하루
+    private final long tokenValidTime = 1000L * 60 * 60 * 24; // 토큰 유효한 시간: 24시
 
-    public String createToken(String userPk, Long id, MemberType memberType) {
+    public String createToken(String userPk, Long id, MemberType memberType) { // 토큰 생성
         Claims claims = Jwts.claims()
                         .setSubject(Aes256Util.encrypt(userPk))
                         .setId(Aes256Util.encrypt(id.toString()));
@@ -33,7 +33,7 @@ public class JwtAuthenticationProvider {
             .compact();
     }
 
-    public boolean validateToken(String jwtToken) {
+    public boolean validateToken(String jwtToken) { // 유효한 토큰인지 검사
         try {
             Jws<Claims> claimsJws =
                 Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);

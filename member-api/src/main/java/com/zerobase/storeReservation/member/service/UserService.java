@@ -20,7 +20,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtAuthenticationProvider provider;
 
+    // 회원가입 기능
     public String signUp(SignUpForm form) {
+        // 이미 회원 가입된 이메일인지 검사
         if (isEmailExist(form.getEmail())) {
             throw new CustomException(ALREADY_REGISTER_USER);
         } else {
@@ -29,6 +31,7 @@ public class UserService {
         }
     }
 
+    // 로그인 성공 시 토큰 생성
     public String userLoginToken(SignInForm form) {
         User user = findValidUser(form.getEmail(), form.getPassword())
             .orElseThrow(() -> new CustomException(LOGIN_CHECK_FAIL));
@@ -40,15 +43,12 @@ public class UserService {
         return userRepository.findByIdAndEmail(id, email);
     }
 
+    // 로그인 시 회원가입 된 이메일, 비밀번호인지 검사
     private Optional<User> findValidUser(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
     }
 
     private boolean isEmailExist(String email) {
         return userRepository.findByEmail(email).isPresent();
-    }
-
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
     }
 }

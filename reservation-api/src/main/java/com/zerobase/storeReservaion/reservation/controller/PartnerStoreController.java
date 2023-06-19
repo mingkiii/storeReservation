@@ -1,5 +1,6 @@
 package com.zerobase.storeReservaion.reservation.controller;
 
+import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.LOGIN_REQUIRED;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.WRONG_ACCESS;
 
 import com.zerobase.storeReservaion.reservation.domain.dto.StoreInfoDto;
@@ -26,17 +27,28 @@ public class PartnerStoreController {
     private final JwtAuthenticationProvider provider;
 
     @PostMapping
-    public ResponseEntity<StoreInfoDto> addStore(
+    public ResponseEntity<StoreInfoDto> addStore( // 파트너 상점 등록
         @RequestHeader(name = TOKEN) String token,
         @RequestBody AddStoreForm form
     ) {
-        MemberType memberType = provider.getMemberType(token);
-        if (memberType == MemberType.USER) {
-            throw new CustomException(WRONG_ACCESS);
-        }
+        validateToken(token);
         return ResponseEntity.ok(
             StoreInfoDto.from(
                 storeService.create(
-                    provider.getMemberVo(token).getId(), form)));
+                    getMemberId(token), form)));
+    }
+
+    private void validateToken(String token) {
+        if (token.isEmpty()) {
+            throw new CustomException(LOGIN_REQUIRED);
+        }
+        MemberType memberType = provider.getMemberType(token);
+        if (memberType != MemberType.PARTNER) {
+            throw new CustomException(WRONG_ACCESS);
+        }
+    }
+
+    private Long getMemberId(String token) {
+        return provider.getMemberVo(token).getId();
     }
 }

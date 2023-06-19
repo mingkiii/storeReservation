@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController { // 유저 상세 정보 조회
     private static final String TOKEN = "X-AUTH-TOKEN";
 
     private final UserService userService;

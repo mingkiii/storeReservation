@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/signin")
 @RequiredArgsConstructor
-public class SignInController {
+public class SignInController { // 멤버 로그인
     private final UserService userService;
     private final PartnerService partnerService;
 

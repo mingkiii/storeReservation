@@ -143,7 +143,7 @@ class ReservationServiceTest {
         when(storeRepository.findById(anyLong())).thenReturn(
             Optional.ofNullable(store));
         when(
-            reservationRepository.findByStoreOrderByDateTime(store)).thenReturn(
+            reservationRepository.findByStoreOrderByDateTimeDesc(store)).thenReturn(
             reservations);
         //When
         List<Reservation> result = reservationService.getReservations(

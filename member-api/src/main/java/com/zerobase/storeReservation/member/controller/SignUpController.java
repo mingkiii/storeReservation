@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/signup")
 @RequiredArgsConstructor
-public class SignUpController {
+public class SignUpController { // 멤버 회원가입
 
     private final UserService userService;
     private final PartnerService partnerService;
