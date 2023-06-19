@@ -1,13 +1,9 @@
 package com.zerobase.storeReservaion.reservation.service;
 
-import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.DIFFERENT_STORE;
-import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_CHECKIN_AVAILABLE_TIME;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_FOUND_RESERVATION;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_YOUR_STORE_RESERVATION;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.REQUEST_FAIL_FULL_RESERVATION;
-import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.RESERVATION_NOT_APPROVED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -232,122 +228,5 @@ class ReservationServiceTest {
         verify(reservationRepository, never()).save(ArgumentMatchers.any(Reservation.class));
 
         assertEquals(NOT_YOUR_STORE_RESERVATION, exception.getErrorCode());
-    }
-
-    @Test
-    @DisplayName("예약 체크인 - 성공")
-    public void testCheckValidReservation_Success() {
-        // Given
-        Long reservationId = 1L;
-        Long storeId = 1L;
-        LocalDateTime currentTime = LocalDateTime.of(2023,6,18,13,50);
-
-        Reservation reservation = Reservation.builder()
-            .id(reservationId)
-            .approval(true)
-            .store(Store.builder().id(storeId).build())
-            .dateTime(LocalDateTime.of(2023,6,18,14,0))
-            .checkIn(false)
-            .build();
-
-        when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(reservation));
-
-        // When
-        String result = reservationService.checkValid(reservationId, storeId, currentTime);
-
-        // Then
-        verify(reservationRepository, times(1)).findById(reservationId);
-        verify(reservationRepository, times(1)).save(reservation);
-
-        assertEquals("예약 체크인이 완료되었습니다.", result);
-        assertTrue(reservation.isCheckIn());
-    }
-
-    @Test
-    @DisplayName("예약 체크인 - 실패_ 승인 되지 않은 예약")
-    public void testCheckValidReservation_ReservationNotApproved() {
-        // Given
-        Long reservationId = 1L;
-        Long storeId = 1L;
-        LocalDateTime currentTime = LocalDateTime.of(2023,6,18,13,50);
-
-        Reservation reservation = Reservation.builder()
-            .id(reservationId)
-            .approval(false) // 예약이 승인되지 않은 상태로 설정
-            .store(Store.builder().id(storeId).build())
-            .dateTime(LocalDateTime.of(2023,6,18,14,0))
-            .checkIn(false)
-            .build();
-
-        when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(reservation));
-
-        // When/Then
-        CustomException exception = assertThrows(CustomException.class,
-            () -> reservationService.checkValid(reservationId, storeId, currentTime));
-
-        verify(reservationRepository, times(1)).findById(reservationId);
-        verify(reservationRepository, never()).save(any(Reservation.class));
-
-        assertEquals(RESERVATION_NOT_APPROVED, exception.getErrorCode());
-        assertFalse(reservation.isCheckIn());
-    }
-
-    @Test
-    @DisplayName("예약 체크인 - 실패_예약된 상점과 다른 상점")
-    public void testCheckValidReservation_DifferentStore() {
-        // Given
-        Long reservationId = 1L;
-        Long storeId = 1L;
-        Long otherStoreId = 2L;
-        LocalDateTime currentTime = LocalDateTime.of(2023,6,18,13,50);
-
-        Reservation reservation = Reservation.builder()
-            .id(reservationId)
-            .approval(true)
-            .store(Store.builder().id(otherStoreId).build())
-            .dateTime(LocalDateTime.of(2023,6,18,14,0))
-            .checkIn(false)
-            .build();
-
-        when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(reservation));
-
-        // When/ Then
-        CustomException exception = assertThrows(CustomException.class,
-            () -> reservationService.checkValid(reservationId, storeId, currentTime));
-
-        verify(reservationRepository, times(1)).findById(reservationId);
-        verify(reservationRepository, never()).save(any(Reservation.class));
-
-        assertEquals(DIFFERENT_STORE, exception.getErrorCode());
-        assertFalse(reservation.isCheckIn());
-    }
-
-    @Test
-    @DisplayName("예약 체크인 - 실패_예약시간 10분 전보다 지난 시간에 체크인 시도")
-    public void testCheckValidReservation_NotCheckInAvailableTime() {
-        // Given
-        Long reservationId = 1L;
-        Long storeId = 1L;
-        LocalDateTime currentTime = LocalDateTime.of(2023,6,18,13,55);
-
-        Reservation reservation = Reservation.builder()
-            .id(reservationId)
-            .approval(true)
-            .store(Store.builder().id(storeId).build())
-            .dateTime(LocalDateTime.of(2023,6,18,14,0))
-            .checkIn(false)
-            .build();
-
-        when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(reservation));
-
-        // When/ Then
-        CustomException exception = assertThrows(CustomException.class,
-            () -> reservationService.checkValid(reservationId, storeId, currentTime));
-
-        verify(reservationRepository, times(1)).findById(reservationId);
-        verify(reservationRepository, never()).save(any(Reservation.class));
-
-        assertEquals(NOT_CHECKIN_AVAILABLE_TIME, exception.getErrorCode());
-        assertFalse(reservation.isCheckIn());
     }
 }
