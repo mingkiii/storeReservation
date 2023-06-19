@@ -21,13 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/partner")
 @RequiredArgsConstructor
 public class PartnerReservationController {
+    private static final String TOKEN = "X-AUTH-TOKEN";
 
     private final JwtAuthenticationProvider provider;
     private final ReservationService reservationService;
 
     @PutMapping("/reservation")
     public ResponseEntity<String> responseReservation(
-        @RequestHeader(name = "X-AUTH-TOKEN") String token,
+        @RequestHeader(name = TOKEN) String token,
         @RequestParam("id") Long reservationId
     ) {
         if (token.isEmpty()) {
@@ -38,7 +39,7 @@ public class PartnerReservationController {
             throw new CustomException(WRONG_ACCESS);
         }
         return ResponseEntity.ok(
-            reservationService.changeReservationApproval(
+            reservationService.changeApproval(
                 provider.getMemberVo(token).getId(), reservationId));
     }
 
@@ -49,7 +50,7 @@ public class PartnerReservationController {
     ) {
         LocalDateTime currentTime = LocalDateTime.now();
         return ResponseEntity.ok(
-            reservationService.checkValidReservation(reservationId, storeId, currentTime)
+            reservationService.checkValid(reservationId, storeId, currentTime)
         );
     }
 }

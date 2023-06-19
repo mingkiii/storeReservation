@@ -63,7 +63,7 @@ class StoreServiceTest {
             .thenReturn(expectedStore);
 
         // When
-        Store result = storeService.addStore(partnerId, form);
+        Store result = storeService.create(partnerId, form);
 
         // Then
         assertNotNull(result);
@@ -94,7 +94,7 @@ class StoreServiceTest {
 
         // When
         CustomException exception = assertThrows(CustomException.class,
-            () -> storeService.addStore(partnerId, form));
+            () -> storeService.create(partnerId, form));
 
         // Then
         assertEquals(SAME_STORE_NAME, exception.getErrorCode());
@@ -146,6 +146,7 @@ class StoreServiceTest {
     }
 
     @Test
+    @DisplayName("상점 상세 정보 조회")
     void testGetStoreDetails() {
         // Given
         Long storeId = 1L;
@@ -161,7 +162,7 @@ class StoreServiceTest {
         when(storeRepository.findById(storeId)).thenReturn(Optional.of(fakeStore));
 
         // When
-        StoreInfoDto result = storeService.getStoreDetails(storeId);
+        StoreInfoDto result = storeService.getInfo(storeId);
 
         // Then
         assertNotNull(result);

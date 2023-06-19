@@ -69,7 +69,7 @@ class ReservationServiceTest {
         ).thenReturn(0L);
 
         // When
-        String result = reservationService.requestReservation(userId, form);
+        String result = reservationService.request(userId, form);
 
         // Then
         verify(reservationRepository, times(1))
@@ -105,7 +105,7 @@ class ReservationServiceTest {
 
         // When
         CustomException exception = assertThrows(CustomException.class,
-            () -> reservationService.requestReservation(userId, form));
+            () -> reservationService.request(userId, form));
 
         // Then
         verify(reservationRepository, times(1))
@@ -146,7 +146,7 @@ class ReservationServiceTest {
             reservationRepository.findByStoreOrderByDateTime(store)).thenReturn(
             reservations);
         //When
-        List<Reservation> result = reservationService.getStoreReservations(
+        List<Reservation> result = reservationService.getReservations(
             storeId);
         //Then
         assertEquals(reservations, result);
@@ -175,7 +175,7 @@ class ReservationServiceTest {
             ArgumentMatchers.any(Reservation.class))).thenReturn(reservation);
         // When
         String result =
-            reservationService.changeReservationApproval(partnerId, reservationId);
+            reservationService.changeApproval(partnerId, reservationId);
 
         // Then
         verify(reservationRepository, times(1))
@@ -197,7 +197,7 @@ class ReservationServiceTest {
 
         // When/Then
         CustomException exception = assertThrows(CustomException.class,
-            () -> reservationService.changeReservationApproval(partnerId, reservationId));
+            () -> reservationService.changeApproval(partnerId, reservationId));
         verify(reservationRepository, times(1)).findById(reservationId);
         verify(reservationRepository, never()).save(ArgumentMatchers.any(Reservation.class));
 
@@ -227,7 +227,7 @@ class ReservationServiceTest {
 
         // When/Then
         CustomException exception = assertThrows(CustomException.class,
-            () -> reservationService.changeReservationApproval(partnerId, reservationId));
+            () -> reservationService.changeApproval(partnerId, reservationId));
         verify(reservationRepository, times(1)).findById(reservationId);
         verify(reservationRepository, never()).save(ArgumentMatchers.any(Reservation.class));
 
@@ -235,6 +235,7 @@ class ReservationServiceTest {
     }
 
     @Test
+    @DisplayName("예약 체크인 - 성공")
     public void testCheckValidReservation_Success() {
         // Given
         Long reservationId = 1L;
@@ -252,7 +253,7 @@ class ReservationServiceTest {
         when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(reservation));
 
         // When
-        String result = reservationService.checkValidReservation(reservationId, storeId, currentTime);
+        String result = reservationService.checkValid(reservationId, storeId, currentTime);
 
         // Then
         verify(reservationRepository, times(1)).findById(reservationId);
@@ -263,6 +264,7 @@ class ReservationServiceTest {
     }
 
     @Test
+    @DisplayName("예약 체크인 - 실패_ 승인 되지 않은 예약")
     public void testCheckValidReservation_ReservationNotApproved() {
         // Given
         Long reservationId = 1L;
@@ -281,7 +283,7 @@ class ReservationServiceTest {
 
         // When/Then
         CustomException exception = assertThrows(CustomException.class,
-            () -> reservationService.checkValidReservation(reservationId, storeId, currentTime));
+            () -> reservationService.checkValid(reservationId, storeId, currentTime));
 
         verify(reservationRepository, times(1)).findById(reservationId);
         verify(reservationRepository, never()).save(any(Reservation.class));
@@ -291,6 +293,7 @@ class ReservationServiceTest {
     }
 
     @Test
+    @DisplayName("예약 체크인 - 실패_예약된 상점과 다른 상점")
     public void testCheckValidReservation_DifferentStore() {
         // Given
         Long reservationId = 1L;
@@ -310,7 +313,7 @@ class ReservationServiceTest {
 
         // When/ Then
         CustomException exception = assertThrows(CustomException.class,
-            () -> reservationService.checkValidReservation(reservationId, storeId, currentTime));
+            () -> reservationService.checkValid(reservationId, storeId, currentTime));
 
         verify(reservationRepository, times(1)).findById(reservationId);
         verify(reservationRepository, never()).save(any(Reservation.class));
@@ -320,6 +323,7 @@ class ReservationServiceTest {
     }
 
     @Test
+    @DisplayName("예약 체크인 - 실패_예약시간 10분 전보다 지난 시간에 체크인 시도")
     public void testCheckValidReservation_NotCheckInAvailableTime() {
         // Given
         Long reservationId = 1L;
@@ -338,7 +342,7 @@ class ReservationServiceTest {
 
         // When/ Then
         CustomException exception = assertThrows(CustomException.class,
-            () -> reservationService.checkValidReservation(reservationId, storeId, currentTime));
+            () -> reservationService.checkValid(reservationId, storeId, currentTime));
 
         verify(reservationRepository, times(1)).findById(reservationId);
         verify(reservationRepository, never()).save(any(Reservation.class));

@@ -23,14 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user/reservation")
 @RequiredArgsConstructor
 public class UserReservationController {
-
+    private static final String TOKEN = "X-AUTH-TOKEN";
     private final JwtAuthenticationProvider provider;
     private final ReservationService reservationService;
     private final ReviewService reviewService;
 
     @PostMapping
     public ResponseEntity<String> requestReservation(
-        @RequestHeader(name = "X-AUTH-TOKEN") String token,
+        @RequestHeader(name = TOKEN) String token,
         @RequestBody ReservationForm form
     ) {
         if (token.isEmpty()) {
@@ -41,15 +41,15 @@ public class UserReservationController {
             throw new CustomException(WRONG_ACCESS);
         }
         return ResponseEntity.ok(
-            reservationService.requestReservation(
+            reservationService.request(
                 provider.getMemberVo(token).getId(), form
             )
         );
     }
 
     @PostMapping("/review")
-    public ResponseEntity<String> registrationReview(
-        @RequestHeader(name = "X-AUTH-TOKEN") String token,
+    public ResponseEntity<String> createReview(
+        @RequestHeader(name = TOKEN) String token,
         @RequestParam("id") Long reservationId,
         @RequestBody ReviewForm form
     ) {
@@ -61,8 +61,8 @@ public class UserReservationController {
             throw new CustomException(WRONG_ACCESS);
         }
         return ResponseEntity.ok(
-            reviewService.registrationReview(
-                provider.getMemberVo(token).getId(), reservationId, form
+            reviewService.create(
+                provider.getMemberVo(token).getId(), token, reservationId, form
             )
         );
     }
