@@ -17,6 +17,7 @@ public enum ErrorCode {
     NOT_FOUND_RESERVATION(HttpStatus.BAD_REQUEST, "예약을 찾을 수 없습니다."),
     SAME_STORE_NAME(HttpStatus.BAD_REQUEST, "상점명 중복입니다."),
     DIFFERENT_STORE(HttpStatus.BAD_REQUEST, "예약된 상점과 다른 상점입니다."),
+    DIFFERENT_USERID(HttpStatus.BAD_REQUEST, "유저 정보와 예약 정보가 다릅니다."),
     RESERVATION_NOT_APPROVED(HttpStatus.BAD_REQUEST, "승인되지 않은 예약입니다."),
     NOT_CHECKIN_AVAILABLE_TIME(HttpStatus.BAD_REQUEST, "예약된 시간 10분 전에만 체크인 가능합니다."),
     NOT_CHECKIN_RESERVATION(HttpStatus.BAD_REQUEST, "예약된 상점을 이용 후 리뷰 등록 가능합니다."),

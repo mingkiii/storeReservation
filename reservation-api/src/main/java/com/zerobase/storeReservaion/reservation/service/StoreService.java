@@ -26,7 +26,7 @@ public class StoreService {
     private final GeocodingUtil geocodingUtil;
 
     @Transactional
-    public Store addStore(Long partnerId, AddStoreForm form) {
+    public Store create(Long partnerId, AddStoreForm form) {
         Optional<Store> existingStore = storeRepository.findByPartnerIdAndName(
             partnerId, form.getName());
         if (existingStore.isPresent()) {
@@ -52,7 +52,7 @@ public class StoreService {
             latitude, longitude, maxDistance, page, pageSize, sort);
     }
 
-    public StoreInfoDto getStoreDetails(Long storeId) {
+    public StoreInfoDto getInfo(Long storeId) {
         Store store = storeRepository.findById(storeId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_STORE));
 

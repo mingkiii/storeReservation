@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @WebFilter(urlPatterns = "/user/*")
 @RequiredArgsConstructor
 public class UserFilter implements Filter {
+    private static final String TOKEN = "X-AUTH-TOKEN";
 
     private final JwtAuthenticationProvider provider;
     private final UserService userService;
@@ -25,7 +26,7 @@ public class UserFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
         FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
-        String token = req.getHeader("X-AUTH-TOKEN");
+        String token = req.getHeader(TOKEN);
 
         if (!provider.validateToken(token)) {
             throw new ServletException("Invalid Access");

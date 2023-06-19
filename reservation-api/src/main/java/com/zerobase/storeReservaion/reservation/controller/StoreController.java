@@ -1,9 +1,11 @@
 package com.zerobase.storeReservaion.reservation.controller;
 
 import com.zerobase.storeReservaion.reservation.domain.dto.ReservationDto;
+import com.zerobase.storeReservaion.reservation.domain.dto.ReviewDto;
 import com.zerobase.storeReservaion.reservation.domain.dto.StoreDto;
 import com.zerobase.storeReservaion.reservation.domain.dto.StoreInfoDto;
 import com.zerobase.storeReservaion.reservation.service.ReservationService;
+import com.zerobase.storeReservaion.reservation.service.ReviewService;
 import com.zerobase.storeReservaion.reservation.service.StoreService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StoreController {
     private final StoreService storeService;
     private final ReservationService reservationService;
+    private final ReviewService reviewService;
 
     @GetMapping("/search")
     public ResponseEntity<Page<StoreDto>> getNearStores(
@@ -41,19 +44,29 @@ public class StoreController {
     }
 
     @GetMapping("/getInfo")
-    public ResponseEntity<StoreInfoDto> getStoreDetails(
+    public ResponseEntity<StoreInfoDto> getInfo(
         @RequestParam("id") Long storeId
     ) {
-        return ResponseEntity.ok(storeService.getStoreDetails(storeId));
+        return ResponseEntity.ok(storeService.getInfo(storeId));
     }
 
     @GetMapping("/reservations")
-    public ResponseEntity<List<ReservationDto>> getStoreReservations(
+    public ResponseEntity<List<ReservationDto>> getReservations(
         @RequestParam("id") Long storeId
     ) {
         return ResponseEntity.ok(
-            reservationService.getStoreReservations(storeId).stream()
+            reservationService.getReservations(storeId).stream()
                 .map(ReservationDto::from).collect(Collectors.toList())
+        );
+    }
+
+    @GetMapping("/reviews")
+    public ResponseEntity<List<ReviewDto>> getReviews(
+        @RequestParam("id") Long storeId
+    ) {
+        return ResponseEntity.ok(
+            reviewService.getReviews(storeId).stream()
+                .map(ReviewDto::from).collect(Collectors.toList())
         );
     }
 }

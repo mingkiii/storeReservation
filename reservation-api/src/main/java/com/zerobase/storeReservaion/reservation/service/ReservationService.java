@@ -29,7 +29,7 @@ public class ReservationService {
     private final StoreRepository storeRepository;
     private final ReservationRepository reservationRepository;
 
-    public String requestReservation(Long userId, ReservationForm form) {
+    public String request(Long userId, ReservationForm form) {
         Store store = storeRepository.findById(form.getStoreId())
                 .orElseThrow(() -> new CustomException(NOT_FOUND_STORE));
 
@@ -50,13 +50,13 @@ public class ReservationService {
         return "예약 신청 완료. 승인 후 이용 가능합니다.";
     }
 
-    public List<Reservation> getStoreReservations(Long storeId) {
+    public List<Reservation> getReservations(Long storeId) {
         Store store = storeRepository.findById(storeId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_STORE));
         return reservationRepository.findByStoreOrderByDateTime(store);
     }
 
-    public String changeReservationApproval(Long partnerId, Long reservationId) {
+    public String changeApproval(Long partnerId, Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_RESERVATION));
         if (!Objects.equals(partnerId, reservation.getStore().getPartnerId())) {
@@ -68,7 +68,7 @@ public class ReservationService {
         return "해당 예약 승인 상태를 변경하였습니다.";
     }
 
-    public String checkValidReservation(Long reservationId, Long storeId, LocalDateTime currentTime) {
+    public String checkValid(Long reservationId, Long storeId, LocalDateTime currentTime) {
         Reservation reservation = reservationRepository.findById(reservationId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_RESERVATION));
 

@@ -14,7 +14,7 @@ Use : Spring, Jpa, Mysql
 - [x] 상점 검색
 - [x] 상점 상세 정보 확인
 - [x] 상점 예약 목록 보기
-- [ ] review 조회
+- [x] review 조회
 ### user
 - [x] 예약 요청
 - [x] review 작성

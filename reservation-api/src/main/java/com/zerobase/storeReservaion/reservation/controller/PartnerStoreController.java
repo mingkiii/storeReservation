@@ -20,13 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/partner/store")
 @RequiredArgsConstructor
 public class PartnerStoreController {
+    private static final String TOKEN = "X-AUTH-TOKEN";
 
     private final StoreService storeService;
     private final JwtAuthenticationProvider provider;
 
     @PostMapping
     public ResponseEntity<StoreInfoDto> addStore(
-        @RequestHeader(name = "X-AUTH-TOKEN") String token,
+        @RequestHeader(name = TOKEN) String token,
         @RequestBody AddStoreForm form
     ) {
         MemberType memberType = provider.getMemberType(token);
@@ -35,7 +36,7 @@ public class PartnerStoreController {
         }
         return ResponseEntity.ok(
             StoreInfoDto.from(
-                storeService.addStore(
+                storeService.create(
                     provider.getMemberVo(token).getId(), form)));
     }
 }

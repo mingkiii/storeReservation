@@ -28,6 +28,8 @@ public class Review extends BaseEntity{
 
     private Long userId;
 
+    private String userName;
+
     private double rating;
 
     private String text;
@@ -36,13 +38,13 @@ public class Review extends BaseEntity{
     @JoinColumn(name = "store_id")
     private Store store;
 
-    public static Review of(Long userId, ReviewForm form, Store store) {
+    public static Review of(Long userId, String userName, ReviewForm form, Store store) {
         return Review.builder()
             .userId(userId)
+            .userName(userName)
             .rating(form.getRating())
             .text(form.getText())
             .store(store)
             .build();
-
     }
 }

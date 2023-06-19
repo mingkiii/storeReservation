@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
   "email": "string22@gamil.com",
-  "name": "홍길동",
+  "name": "김철수",
   "password": "string123!",
   "phone": "01012341234"
 }
