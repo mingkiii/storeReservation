@@ -1,10 +1,10 @@
 ###### 공통
 ### Search Store
-GET http://localhost:8082/store/search?address=인계동 1100&maxDistance=1000&sort=distance
+GET http://localhost:8082/store/search?address=인계동 1100&maxDistance=1000&sort=rating
 Content-Type: application/json
 
 ### Store info
-GET http://localhost:8082/store/getInfo?id=1
+GET http://localhost:8082/store/getInfo?id=2
 Content-Type: application/json
 
 ### Store reservation List
@@ -12,14 +12,14 @@ GET http://localhost:8082/store/reservations?id=1
 Content-Type: application/json
 
 ### Store review List
-GET http://localhost:8082/store/reviews?id=1
+GET http://localhost:8082/store/reviews?id=2
 Content-Type: application/json
 
 ######## User
 ### 예약 요청
 POST http://localhost:8082/user/reservation
 Content-Type: application/json
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJRRFcvQjJ6M2w2NlJpZWNNOHpYbEtTZkxWaTNqalhIdjN1YVVHazlLWHJzPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzE1OTAxOSwiZXhwIjoxNjg3MjQ1NDE5fQ.Mzoh6kMXrIOlqnDgF8Ep9Dh1yNwXiSUuEVpS_6sGIBc
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHWGhFdEw0ZzE1LzZNQ2xyaitjRjkyQXlxV28ydlBINGhIYTA2Q3M3NWQ4PSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzE2ODI0NCwiZXhwIjoxNjg3MjU0NjQ0fQ.hEbp4rSCIwbQp4sRzB6FAuQlpVzeFip6Aa3fF_iFQMU
 
 {
   "dateTime": "2023-06-20 16:30",
@@ -29,10 +29,10 @@ X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJRRFcvQjJ6M2w2NlJpZWNNOHpYbEtTZkxWaT
 ### 리뷰 등록
 POST http://localhost:8082/user/reservation/review?id=2
 Content-Type: application/json
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJRRFcvQjJ6M2w2NlJpZWNNOHpYbEtTZkxWaTNqalhIdjN1YVVHazlLWHJzPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzE1OTAxOSwiZXhwIjoxNjg3MjQ1NDE5fQ.Mzoh6kMXrIOlqnDgF8Ep9Dh1yNwXiSUuEVpS_6sGIBc
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHWGhFdEw0ZzE1LzZNQ2xyaitjRjkyQXlxV28ydlBINGhIYTA2Q3M3NWQ4PSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzE2ODI0NCwiZXhwIjoxNjg3MjU0NjQ0fQ.hEbp4rSCIwbQp4sRzB6FAuQlpVzeFip6Aa3fF_iFQMU
 
 {
-  "rating": 5.0,
+  "rating": 3.0,
   "text": "test review2"
 }
 
@@ -40,19 +40,24 @@ X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJRRFcvQjJ6M2w2NlJpZWNNOHpYbEtTZkxWaT
 ### store 등록
 POST http://localhost:8082/partner/store
 Content-Type: application/json
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZHFFeEN6VC9mNEtEZWhIVnluM2tlYWx3Nkd1VlVqdi81MFQwUDdrVStvPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzE1ODM5MCwiZXhwIjoxNjg3MjQ0NzkwfQ.6-uonjFjkwQlfhHNvMJFebp9z71YHI2MG_wNs-nKBEo
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLemp5TzNUUEs1a01GR3FRSjVQMWpZbld0NzRUZ0lmL1Fnek1yYXhkZjhBPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzE2ODA0NSwiZXhwIjoxNjg3MjU0NDQ1fQ.gzUowzCVvR_hrzj6it-nWWpOiwBGoaUGp9lNz8_5rE4
 
 {
-  "address": "인계동 1119",
-  "name": "fString2",
+  "address": "인계동 1120",
+  "name": "aString2",
   "text": "전문점1"
 }
 
 ### reservation 승인 상태 변경
-PUT http://localhost:8082/partner/reservation?id=2
+PUT http://localhost:8082/partner/reservation?id=1
 Content-Type: application/json
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZHFFeEN6VC9mNEtEZWhIVnluM2tlYWx3Nkd1VlVqdi81MFQwUDdrVStvPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzE1ODM5MCwiZXhwIjoxNjg3MjQ0NzkwfQ.6-uonjFjkwQlfhHNvMJFebp9z71YHI2MG_wNs-nKBEo
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLemp5TzNUUEs1a01GR3FRSjVQMWpZbld0NzRUZ0lmL1Fnek1yYXhkZjhBPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzE2ODA0NSwiZXhwIjoxNjg3MjU0NDQ1fQ.gzUowzCVvR_hrzj6it-nWWpOiwBGoaUGp9lNz8_5rE4
 
-### kiosk - checkValidReservation 체크인 가능한 예약 정보인지 확인
-PUT http://localhost:8082/partner/1/checkin?id=2
+######## kiosk - 체크인 가능한 예약 정보인지 확인. 체크인 시 서버에 알림
+POST http://localhost:8082/kiosk/checkin
 Content-Type: application/json
+
+{
+  "reservationId": 1,
+  "storeId": 1
+}

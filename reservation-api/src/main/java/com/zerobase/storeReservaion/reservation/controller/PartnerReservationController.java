@@ -7,10 +7,9 @@ import com.zerobase.storeReservaion.reservation.exception.CustomException;
 import com.zerobase.storeReservaion.reservation.service.ReservationService;
 import com.zerobase.storeReservation.common.config.JwtAuthenticationProvider;
 import com.zerobase.storeReservation.common.type.MemberType;
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +25,9 @@ public class PartnerReservationController {
     private final JwtAuthenticationProvider provider;
     private final ReservationService reservationService;
 
+    // 파트너 - 유저의 예약 요청에 대한 승인 여부
     @PutMapping("/reservation")
-    public ResponseEntity<String> responseReservation( // 파트너 - 유저의 예약 요청에 대한 승인 여부
+    public ResponseEntity<String> responseReservation(
         @RequestHeader(name = TOKEN) String token,
         @RequestParam("id") Long reservationId
     ) {
@@ -37,15 +37,15 @@ public class PartnerReservationController {
                 getMemberId(token), reservationId));
     }
 
-    @PutMapping("/{storeId}/checkin") // 키오스크 기능 - 방문 가능한 예약 정보인지 검사 후 체크인
-    public ResponseEntity<String> checkValidReservation(
-        @PathVariable Long storeId,
-        @RequestParam("id") Long reservationId
+    // 유저가 체크인하면 키오스크로부터 알림을 받는 기능..
+    @PostMapping("/notifications/checkin")
+    public ResponseEntity<String> handleCheckinNotification(
+        @RequestParam Long reservationId,
+        @RequestParam Long storeId
     ) {
-        LocalDateTime currentTime = LocalDateTime.now();
-        return ResponseEntity.ok(
-            reservationService.checkValid(reservationId, storeId, currentTime)
-        );
+        // 알림 요청을 처리하는 로직 구현..
+        // 필요한 처리 및 응답 작업 수행
+        return ResponseEntity.ok("Notification received");
     }
 
     private void validateToken(String token) {
