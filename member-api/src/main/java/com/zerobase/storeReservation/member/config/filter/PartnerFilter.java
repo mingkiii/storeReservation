@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @WebFilter(urlPatterns = "/partner/*")
 @RequiredArgsConstructor
-public class PartnerFilter implements Filter {
+public class PartnerFilter implements Filter { // 토큰 사용시 필터 적용
     private static final String TOKEN = "X-AUTH-TOKEN";
 
     private final JwtAuthenticationProvider provider;

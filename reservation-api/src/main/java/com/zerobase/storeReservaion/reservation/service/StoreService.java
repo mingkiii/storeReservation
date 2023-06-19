@@ -29,22 +29,33 @@ public class StoreService {
     public Store create(Long partnerId, AddStoreForm form) {
         Optional<Store> existingStore = storeRepository.findByPartnerIdAndName(
             partnerId, form.getName());
+        // 이미 파트너의 상점 중 상점명이 있는 경우
         if (existingStore.isPresent()) {
             throw new CustomException(SAME_STORE_NAME);
         }
-        double[] coords = geocodingUtil.geoCoding(form.getAddress());
+
+        double[] coords = getCoordinatesFromAddress(form.getAddress());
+        double latitude = coords[0];
+        double longitude = coords[1];
 
         return storeRepository.save(
-            Store.of(partnerId, form, coords[0], coords[1]));
+            Store.of(partnerId, form, latitude, longitude));
     }
 
+    /**
+     * 주어진 좌표 주변에 있는 가게 목록을 가져옵니다.
+     *
+     * @param address       요청 주소
+     * @param maxDistance   요청 주소 반경 최대 거리 (미터 단위)
+     * @param page          페이지 번호 (1부터 시작)
+     * @param pageSize      페이지 당 결과 수
+     * @param sort          정렬 기준
+     * @return              주어진 조건에 맞는 상점 목록과 페이징 정보
+     */
     public Page<StoreDto> getNearbyStores(
         String address, double maxDistance, int page, int pageSize, Sort sort) {
 
-        double[] coords = geocodingUtil.geoCoding(address);
-        if (coords == null) {
-            throw new CustomException(WRONG_ADDRESS);
-        }
+        double[] coords = getCoordinatesFromAddress(address);
         double latitude = coords[0];
         double longitude = coords[1];
 
@@ -52,10 +63,20 @@ public class StoreService {
             latitude, longitude, maxDistance, page, pageSize, sort);
     }
 
+    // 상점 상세 정보 가져오기
     public StoreInfoDto getInfo(Long storeId) {
         Store store = storeRepository.findById(storeId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_STORE));
 
         return StoreInfoDto.from(store);
+    }
+
+    // 오픈 api 이용하여 주소를 위도, 경도로 변환
+    private double[] getCoordinatesFromAddress(String address) {
+        double[] coords = geocodingUtil.geoCoding(address);
+        if (coords == null) {
+            throw new CustomException(WRONG_ADDRESS);
+        }
+        return coords;
     }
 }

@@ -29,14 +29,6 @@ public class StoreDto {
             .name(store.getName())
             .address(store.getAddress())
             .text(store.getText())
-            .build();
-    }
-    public static StoreDto toStoreDto(Store store) {
-        return StoreDto.builder()
-            .id(store.getId())
-            .name(store.getName())
-            .address(store.getAddress())
-            .text(store.getText())
             .rating(store.getRating())
             .reviewCount(store.getReviewCount())
             .build();

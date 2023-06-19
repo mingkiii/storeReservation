@@ -14,5 +14,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     long countByDateTimeGreaterThanAndDateTimeLessThanAndStore(
         LocalDateTime startDateTime, LocalDateTime endDateTime, Store store);
 
-    List<Reservation> findByStoreOrderByDateTime(Store store);
+    List<Reservation> findByStoreOrderByDateTimeDesc(Store store);
 }

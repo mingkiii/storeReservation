@@ -27,23 +27,17 @@ public class PartnerReservationController {
     private final ReservationService reservationService;
 
     @PutMapping("/reservation")
-    public ResponseEntity<String> responseReservation(
+    public ResponseEntity<String> responseReservation( // 파트너 - 유저의 예약 요청에 대한 승인 여부
         @RequestHeader(name = TOKEN) String token,
         @RequestParam("id") Long reservationId
     ) {
-        if (token.isEmpty()) {
-            throw new CustomException(LOGIN_REQUIRED);
-        }
-        MemberType memberType = provider.getMemberType(token);
-        if (memberType != MemberType.PARTNER) {
-            throw new CustomException(WRONG_ACCESS);
-        }
+        validateToken(token);
         return ResponseEntity.ok(
             reservationService.changeApproval(
-                provider.getMemberVo(token).getId(), reservationId));
+                getMemberId(token), reservationId));
     }
 
-    @PutMapping("/{storeId}/checkin")
+    @PutMapping("/{storeId}/checkin") // 키오스크 기능 - 방문 가능한 예약 정보인지 검사 후 체크인
     public ResponseEntity<String> checkValidReservation(
         @PathVariable Long storeId,
         @RequestParam("id") Long reservationId
@@ -52,5 +46,19 @@ public class PartnerReservationController {
         return ResponseEntity.ok(
             reservationService.checkValid(reservationId, storeId, currentTime)
         );
+    }
+
+    private void validateToken(String token) {
+        if (token.isEmpty()) {
+            throw new CustomException(LOGIN_REQUIRED);
+        }
+        MemberType memberType = provider.getMemberType(token);
+        if (memberType != MemberType.PARTNER) {
+            throw new CustomException(WRONG_ACCESS);
+        }
+    }
+
+    private Long getMemberId(String token) {
+        return provider.getMemberVo(token).getId();
     }
 }

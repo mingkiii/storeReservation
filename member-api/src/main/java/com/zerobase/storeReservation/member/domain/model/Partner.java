@@ -30,7 +30,7 @@ public class Partner extends BaseEntity{
     @Column(unique = true)
     @NotBlank(message = "필수 입력")
     @Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$", message = "이메일 형식이 올바르지 않습니다.")
-    private String email;
+    private String email; // 이메일을 로그인 아이디로 사용
 
     @NotBlank(message = "필수 입력")
     private String name;
