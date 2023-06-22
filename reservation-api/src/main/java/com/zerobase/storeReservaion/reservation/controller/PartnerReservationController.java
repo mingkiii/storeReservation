@@ -25,26 +25,38 @@ public class PartnerReservationController {
     private final JwtAuthenticationProvider provider;
     private final ReservationService reservationService;
 
-    // 파트너 - 유저의 예약 요청에 대한 승인 여부
-    @PutMapping("/reservation")
-    public ResponseEntity<String> responseReservation(
+    // 파트너 - 유저의 예약 요청에 대한 승인
+    @PutMapping("/reservation/approval")
+    public ResponseEntity<String> reservationApproval(
         @RequestHeader(name = TOKEN) String token,
         @RequestParam("id") Long reservationId
     ) {
         validateToken(token);
         return ResponseEntity.ok(
-            reservationService.changeApproval(
+            reservationService.approval(
                 getMemberId(token), reservationId));
     }
 
-    // 유저가 체크인하면 키오스크로부터 알림을 받는 기능..
+    // 파트너 - 유저의 예약 요청에 대한 거절
+    @PutMapping("/reservation/refuse")
+    public ResponseEntity<String> reservationRefuse(
+        @RequestHeader(name = TOKEN) String token,
+        @RequestParam("id") Long reservationId
+    ) {
+        validateToken(token);
+        return ResponseEntity.ok(
+            reservationService.refuse(
+                getMemberId(token), reservationId));
+    }
+
+    // 유저가 체크인하면 키오스크로부터 알림을 받는 기능..체크인 시 키오스크클라이언트가 이 서버로 알리기위해 만듬..
     @PostMapping("/notifications/checkin")
     public ResponseEntity<String> handleCheckinNotification(
         @RequestParam Long reservationId,
         @RequestParam Long storeId
     ) {
         // 알림 요청을 처리하는 로직 구현..
-        // 필요한 처리 및 응답 작업 수행
+        // 필요한 처리 및 응답 작업 수행..
         return ResponseEntity.ok("Notification received");
     }
 

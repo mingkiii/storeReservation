@@ -1,6 +1,5 @@
 package com.zerobase.storeReservaion.reservation.domain.model;
 
-import com.zerobase.storeReservaion.reservation.domain.form.ReservationForm;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +31,8 @@ public class Reservation extends BaseEntity{
     private LocalDateTime dateTime;
 
     private boolean approval;
+
+    private boolean refuse;
 
     private boolean checkIn;
 

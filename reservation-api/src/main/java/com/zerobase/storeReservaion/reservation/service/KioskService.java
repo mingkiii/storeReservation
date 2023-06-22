@@ -28,7 +28,7 @@ public class KioskService {
             .orElseThrow(() -> new CustomException(NOT_FOUND_RESERVATION));
 
         // 승인상태 false -> 예외 발생
-        if (!reservation.isApproval()) {
+        if (!reservation.isApproval() || reservation.isRefuse()) {
             throw new CustomException(RESERVATION_NOT_APPROVED);
         }
 

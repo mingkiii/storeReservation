@@ -1,9 +1,11 @@
 package com.zerobase.storeReservaion.reservation.service;
 
+import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.ALREADY_CHECKIN_RESERVATION;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_FOUND_RESERVATION;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_YOUR_STORE_RESERVATION;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.REQUEST_FAIL_FULL_RESERVATION;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -149,8 +151,8 @@ class ReservationServiceTest {
     }
 
     @Test
-    @DisplayName("예약 승인 상태 변경 - 성공")
-    public void changeReservationApproval_Success() {
+    @DisplayName("파트너_예약 승인 - 성공")
+    public void reservationApproval_Success() {
         // Given
         Long partnerId = 1L;
         Long reservationId = 5L;
@@ -161,6 +163,7 @@ class ReservationServiceTest {
         Reservation reservation = Reservation.builder()
             .id(reservationId)
             .approval(false)
+            .refuse(false)
             .store(store)
             .dateTime(LocalDateTime.now())
             .build();
@@ -171,7 +174,7 @@ class ReservationServiceTest {
             ArgumentMatchers.any(Reservation.class))).thenReturn(reservation);
         // When
         String result =
-            reservationService.changeApproval(partnerId, reservationId);
+            reservationService.approval(partnerId, reservationId);
 
         // Then
         verify(reservationRepository, times(1))
@@ -179,12 +182,13 @@ class ReservationServiceTest {
         verify(reservationRepository, times(1))
             .save(Objects.requireNonNull(reservation));
         assertTrue(reservation.isApproval());
-        assertEquals("해당 예약 승인 상태를 변경하였습니다.", result);
+        assertFalse(reservation.isRefuse());
+        assertEquals("해당 예약을 승인하였습니다.", result);
     }
 
     @Test
-    @DisplayName("예약 승인 상태 변경 - 실패_NotFoundReservation")
-    public void changeReservationApproval_NotFoundReservation() {
+    @DisplayName("파트너_예약 승인 - 실패_NotFoundReservation")
+    public void reservationApproval_NotFoundReservation() {
         // Given
         Long partnerId = 1L;
         Long reservationId = 1L;
@@ -193,7 +197,7 @@ class ReservationServiceTest {
 
         // When/Then
         CustomException exception = assertThrows(CustomException.class,
-            () -> reservationService.changeApproval(partnerId, reservationId));
+            () -> reservationService.approval(partnerId, reservationId));
         verify(reservationRepository, times(1)).findById(reservationId);
         verify(reservationRepository, never()).save(ArgumentMatchers.any(Reservation.class));
 
@@ -201,8 +205,8 @@ class ReservationServiceTest {
     }
 
     @Test
-    @DisplayName("예약 승인 상태 변경 - 실패_NotYourStoreReservation")
-    public void testResponseReservation_NotYourStoreReservation() {
+    @DisplayName("파트너_예약 승인 - 실패_NotYourStoreReservation")
+    public void reservationApproval_NotYourStoreReservation() {
         // Given
         Long partnerId = 1L;
         Long reservationId = 1L;
@@ -223,10 +227,75 @@ class ReservationServiceTest {
 
         // When/Then
         CustomException exception = assertThrows(CustomException.class,
-            () -> reservationService.changeApproval(partnerId, reservationId));
+            () -> reservationService.approval(partnerId, reservationId));
         verify(reservationRepository, times(1)).findById(reservationId);
         verify(reservationRepository, never()).save(ArgumentMatchers.any(Reservation.class));
 
         assertEquals(NOT_YOUR_STORE_RESERVATION, exception.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("파트너_예약 거절 - 성공")
+    public void reservationRefuse_Success() {
+        // Given
+        Long partnerId = 1L;
+        Long reservationId = 5L;
+        Store store = Store.builder()
+            .id(10L)
+            .partnerId(partnerId)
+            .build();
+        Reservation reservation = Reservation.builder()
+            .id(reservationId)
+            .approval(false)
+            .refuse(false)
+            .store(store)
+            .dateTime(LocalDateTime.now())
+            .build();
+
+        when(reservationRepository.findById(reservationId))
+            .thenReturn(Optional.ofNullable(reservation));
+        when(reservationRepository.save(
+            ArgumentMatchers.any(Reservation.class))).thenReturn(reservation);
+        // When
+        String result =
+            reservationService.refuse(partnerId, reservationId);
+
+        // Then
+        verify(reservationRepository, times(1))
+            .findById(reservationId);
+        verify(reservationRepository, times(1))
+            .save(Objects.requireNonNull(reservation));
+        assertTrue(reservation.isRefuse());
+        assertFalse(reservation.isApproval());
+        assertEquals("해당 예약을 거절하였습니다.", result);
+    }
+
+    @Test
+    @DisplayName("파트너_예약 거절 - 실패_AlreadyCheckinReservation")
+    public void reservationRefuse_AlreadyCheckin() {
+        // Given
+        Long partnerId = 1L;
+        Long reservationId = 1L;
+
+        Store store = Store.builder()
+            .id(10L)
+            .partnerId(partnerId)
+            .build();
+        Reservation reservation = Reservation.builder()
+            .id(reservationId)
+            .checkIn(true)
+            .store(store)
+            .dateTime(LocalDateTime.now())
+            .build();
+
+        when(reservationRepository.findById(reservationId)).thenReturn(java.util.Optional.of(reservation));
+
+        // When/Then
+        CustomException exception = assertThrows(CustomException.class,
+            () -> reservationService.refuse(partnerId, reservationId));
+        verify(reservationRepository, times(1)).findById(reservationId);
+        verify(reservationRepository, never()).save(ArgumentMatchers.any(Reservation.class));
+
+        assertEquals(ALREADY_CHECKIN_RESERVATION, exception.getErrorCode());
     }
 }
