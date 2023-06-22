@@ -54,7 +54,7 @@ Content-Type: application/json
 X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLemp5TzNUUEs1a01GR3FRSjVQMWpZbld0NzRUZ0lmL1Fnek1yYXhkZjhBPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzE2ODA0NSwiZXhwIjoxNjg3MjU0NDQ1fQ.gzUowzCVvR_hrzj6it-nWWpOiwBGoaUGp9lNz8_5rE4
 
 ######## kiosk - 체크인 가능한 예약 정보인지 확인. 체크인 시 서버에 알림
-POST http://localhost:8082/kiosk/checkin
+PUT http://localhost:8082/kiosk/checkin
 Content-Type: application/json
 
 {
