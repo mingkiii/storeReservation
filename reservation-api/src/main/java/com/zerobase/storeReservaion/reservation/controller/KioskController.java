@@ -18,7 +18,7 @@ public class KioskController {
     private final KioskService kioskService;
 
     // 키오스크 기능 - 방문 가능한 예약 정보인지 검사 후 체크인, 체크인 시 서버에 알림
-    @PostMapping
+    @PutMapping
     public ResponseEntity<String> processCheckin(@RequestBody CheckinForm form) {
         LocalDateTime currentTime = LocalDateTime.now();
         return ResponseEntity.ok(kioskService.checkValid(
