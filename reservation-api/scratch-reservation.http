@@ -19,17 +19,17 @@ Content-Type: application/json
 ### 예약 요청
 POST http://localhost:8082/user/reservation
 Content-Type: application/json
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHWGhFdEw0ZzE1LzZNQ2xyaitjRjkyQXlxV28ydlBINGhIYTA2Q3M3NWQ4PSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzE2ODI0NCwiZXhwIjoxNjg3MjU0NjQ0fQ.hEbp4rSCIwbQp4sRzB6FAuQlpVzeFip6Aa3fF_iFQMU
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHWGhFdEw0ZzE1LzZNQ2xyaitjRjkyQXlxV28ydlBINGhIYTA2Q3M3NWQ4PSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzQ0MTM4NSwiZXhwIjoxNjg3NTI3Nzg1fQ.8hFosM20I-25aSrT34AzuzO8gKXegqb4LS3nrGxOauU
 
 {
-  "dateTime": "2023-06-20 16:30",
+  "dateTime": "2023-06-23 16:30",
   "storeId": 1
 }
 
 ### 리뷰 등록
 POST http://localhost:8082/user/reservation/review?id=2
 Content-Type: application/json
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHWGhFdEw0ZzE1LzZNQ2xyaitjRjkyQXlxV28ydlBINGhIYTA2Q3M3NWQ4PSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzE2ODI0NCwiZXhwIjoxNjg3MjU0NjQ0fQ.hEbp4rSCIwbQp4sRzB6FAuQlpVzeFip6Aa3fF_iFQMU
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHWGhFdEw0ZzE1LzZNQ2xyaitjRjkyQXlxV28ydlBINGhIYTA2Q3M3NWQ4PSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY4NzQ0MTM4NSwiZXhwIjoxNjg3NTI3Nzg1fQ.8hFosM20I-25aSrT34AzuzO8gKXegqb4LS3nrGxOauU
 
 {
   "rating": 3.0,
@@ -40,7 +40,7 @@ X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHWGhFdEw0ZzE1LzZNQ2xyaitjRjkyQXlxV2
 ### store 등록
 POST http://localhost:8082/partner/store
 Content-Type: application/json
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLemp5TzNUUEs1a01GR3FRSjVQMWpZbld0NzRUZ0lmL1Fnek1yYXhkZjhBPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzE2ODA0NSwiZXhwIjoxNjg3MjU0NDQ1fQ.gzUowzCVvR_hrzj6it-nWWpOiwBGoaUGp9lNz8_5rE4
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKS0J2a3NOMlhqb09qd25qamRNdkg3Z1BPMWsrb2k2SVJ3a2Judlk3UkVNPSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzQ0MTMyMiwiZXhwIjoxNjg3NTI3NzIyfQ.kn0Epb4qQnnayjaXHkVrKfVjAC2mZrMwVCiMMpjwzns
 
 {
   "address": "인계동 1120",
@@ -48,10 +48,15 @@ X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLemp5TzNUUEs1a01GR3FRSjVQMWpZbld0Nz
   "text": "전문점1"
 }
 
-### reservation 승인 상태 변경
-PUT http://localhost:8082/partner/reservation?id=1
+### reservation 승인
+PUT http://localhost:8082/partner/reservation/approval?id=1
 Content-Type: application/json
-X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLemp5TzNUUEs1a01GR3FRSjVQMWpZbld0NzRUZ0lmL1Fnek1yYXhkZjhBPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzE2ODA0NSwiZXhwIjoxNjg3MjU0NDQ1fQ.gzUowzCVvR_hrzj6it-nWWpOiwBGoaUGp9lNz8_5rE4
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKS0J2a3NOMlhqb09qd25qamRNdkg3Z1BPMWsrb2k2SVJ3a2Judlk3UkVNPSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzQ0MTMyMiwiZXhwIjoxNjg3NTI3NzIyfQ.kn0Epb4qQnnayjaXHkVrKfVjAC2mZrMwVCiMMpjwzns
+
+### reservation 거절
+PUT http://localhost:8082/partner/reservation/refuse?id=1
+Content-Type: application/json
+X-AUTH-TOKEN:eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKS0J2a3NOMlhqb09qd25qamRNdkg3Z1BPMWsrb2k2SVJ3a2Judlk3UkVNPSIsImp0aSI6IlN1YkhlS1VSUnJlUVkrV1NPbkJrdGc9PSIsInJvbGVzIjoiUEFSVE5FUiIsImlhdCI6MTY4NzQ0MTMyMiwiZXhwIjoxNjg3NTI3NzIyfQ.kn0Epb4qQnnayjaXHkVrKfVjAC2mZrMwVCiMMpjwzns
 
 ######## kiosk - 체크인 가능한 예약 정보인지 확인. 체크인 시 서버에 알림
 PUT http://localhost:8082/kiosk/checkin

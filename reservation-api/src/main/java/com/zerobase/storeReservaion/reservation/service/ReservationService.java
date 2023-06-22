@@ -1,5 +1,6 @@
 package com.zerobase.storeReservaion.reservation.service;
 
+import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.ALREADY_CHECKIN_RESERVATION;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_FOUND_RESERVATION;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_FOUND_STORE;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_YOUR_STORE_RESERVATION;
@@ -33,7 +34,7 @@ public class ReservationService {
                 .orElseThrow(() -> new CustomException(NOT_FOUND_STORE));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        // form으로 받은 string 타입인 dateTime을 LocalDateTime으로 변형
+        // form 으로 받은 string 타입인 dateTime 을 LocalDateTime 으로 변형
         LocalDateTime requestedDateTime = LocalDateTime.parse(form.getDateTime(), formatter);
 
         // 요청 예약 시간 1시간 전후로 예약 건수 확인
@@ -59,8 +60,8 @@ public class ReservationService {
         return reservationRepository.findByStoreOrderByDateTimeDesc(store);
     }
 
-    // 파트너 - 예약 승인 변경
-    public String changeApproval(Long partnerId, Long reservationId) {
+    // 파트너 - 예약 승인
+    public String approval(Long partnerId, Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_RESERVATION));
 
@@ -68,10 +69,30 @@ public class ReservationService {
         if (!Objects.equals(partnerId, reservation.getStore().getPartnerId())) {
             throw new CustomException(NOT_YOUR_STORE_RESERVATION);
         }
-        // 승인상태 false -> true, true -> false 로 변경
-        reservation.setApproval(!reservation.isApproval());
-
+        reservation.setApproval(true);
+        reservation.setRefuse(false);
         reservationRepository.save(reservation);
-        return "해당 예약 승인 상태를 변경하였습니다.";
+
+        return "해당 예약을 승인하였습니다.";
+    }
+
+    // 파트너 - 예약 거절
+    public String refuse(Long partnerId, Long reservationId) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+            .orElseThrow(() -> new CustomException(NOT_FOUND_RESERVATION));
+
+        // 예약된 상점의 파트너 아이디와 메서드를 사용하려는 파트너 아이디 비교
+        if (!Objects.equals(partnerId, reservation.getStore().getPartnerId())) {
+            throw new CustomException(NOT_YOUR_STORE_RESERVATION);
+        }
+        // 이미 사용(방문)된 예약일 경우 거절 불가
+        if (reservation.isCheckIn()) {
+            throw new CustomException(ALREADY_CHECKIN_RESERVATION);
+        }
+        reservation.setRefuse(true);
+        reservation.setApproval(false);
+        reservationRepository.save(reservation);
+
+        return "해당 예약을 거절하였습니다.";
     }
 }
