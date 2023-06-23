@@ -19,8 +19,9 @@ public class ReviewForm {
     @DecimalMax(value = "5.0", inclusive = true, message = "최대 5.0 점")
     @Digits(integer = 1, fraction = 1, message = "소수점은 0.5 단위로만 가능합니다.")
     @Positive(message = "양수값만 가능합니다.")
+    @NotBlank(message = "필수 입력")
     private double rating;
 
-    @NotBlank
+    @NotBlank(message = "필수 입력")
     private String text;
 }

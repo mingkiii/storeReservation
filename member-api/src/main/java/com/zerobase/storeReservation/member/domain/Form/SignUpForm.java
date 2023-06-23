@@ -1,5 +1,6 @@
 package com.zerobase.storeReservation.member.domain.Form;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
