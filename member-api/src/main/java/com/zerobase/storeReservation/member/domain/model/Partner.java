@@ -34,11 +34,11 @@ public class Partner extends BaseEntity{
 
     private String phone;
 
-    public static Partner from(SignUpForm form) {
+    public static Partner of(SignUpForm form, String encodedPassword) {
         return Partner.builder()
             .email(form.getEmail())
             .name(form.getName())
-            .password(form.getPassword())
+            .password(encodedPassword)
             .phone(form.getPhone())
             .build();
     }

@@ -35,11 +35,11 @@ public class User extends BaseEntity{
 
     private String phone;
 
-    public static User from(SignUpForm form) {
+    public static User of(SignUpForm form, String encodedPassword) {
         return User.builder()
             .email(form.getEmail())
             .name(form.getName())
-            .password(form.getPassword())
+            .password(encodedPassword)
             .phone(form.getPhone())
             .build();
     }
