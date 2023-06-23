@@ -27,7 +27,7 @@ public class GeocodingUtil {
 
     public double[] geoCoding(String location) {
         String epsg = "epsg:4326";
-        String SEARCH_TYPE = "parcel";
+        String SEARCH_TYPE = "parcel"; // 지번주소
 
         StringBuilder sb = new StringBuilder(API_URL);
         sb.append("&format=json");

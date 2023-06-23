@@ -10,6 +10,7 @@ import com.zerobase.storeReservaion.reservation.service.ReservationService;
 import com.zerobase.storeReservaion.reservation.service.ReviewService;
 import com.zerobase.storeReservation.common.config.JwtAuthenticationProvider;
 import com.zerobase.storeReservation.common.type.MemberType;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +32,7 @@ public class UserReservationController {
     @PostMapping
     public ResponseEntity<String> requestReservation( // 유저 - 예약 요청
         @RequestHeader(name = TOKEN) String token,
-        @RequestBody ReservationForm form
+        @Valid @RequestBody ReservationForm form
     ) {
         validateToken(token);
         return ResponseEntity.ok(
@@ -45,7 +46,7 @@ public class UserReservationController {
     public ResponseEntity<String> createReview(
         @RequestHeader(name = TOKEN) String token,
         @RequestParam("id") Long reservationId,
-        @RequestBody ReviewForm form
+        @Valid @RequestBody ReviewForm form
     ) {
         validateToken(token);
         return ResponseEntity.ok(
