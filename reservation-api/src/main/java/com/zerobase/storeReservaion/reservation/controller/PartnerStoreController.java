@@ -9,6 +9,7 @@ import com.zerobase.storeReservaion.reservation.exception.CustomException;
 import com.zerobase.storeReservaion.reservation.service.StoreService;
 import com.zerobase.storeReservation.common.config.JwtAuthenticationProvider;
 import com.zerobase.storeReservation.common.type.MemberType;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,7 @@ public class PartnerStoreController {
     @PostMapping
     public ResponseEntity<StoreInfoDto> addStore( // 파트너 상점 등록
         @RequestHeader(name = TOKEN) String token,
-        @RequestBody AddStoreForm form
+        @Valid @RequestBody AddStoreForm form
     ) {
         validateToken(token);
         return ResponseEntity.ok(
