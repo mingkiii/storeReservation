@@ -11,6 +11,8 @@ public enum ErrorCode {
     LOGIN_REQUIRED(HttpStatus.BAD_REQUEST, "로그인이 필요합니다."),
     WRONG_ACCESS(HttpStatus.BAD_REQUEST, "잘못된 접근입니다."),
 
+    VALIDATION_ERROR(HttpStatus.BAD_REQUEST, "올바른 입력값이 아닙니다."),
+
     NOT_YOUR_STORE_RESERVATION(HttpStatus.BAD_REQUEST, "해당 예약의 점주만 접근 가능합니다."),
     ALREADY_CHECKIN_RESERVATION(HttpStatus.BAD_REQUEST, "이미 사용된 예약입니다."),
     REQUEST_FAIL_FULL_RESERVATION(HttpStatus.BAD_REQUEST, "예약 만료. 해당 시간은 예약이 다 찼습니다."),

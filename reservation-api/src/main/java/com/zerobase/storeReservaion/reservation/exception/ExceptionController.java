@@ -1,10 +1,15 @@
 package com.zerobase.storeReservaion.reservation.exception;
 
+import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.VALIDATION_ERROR;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -17,6 +22,20 @@ public class ExceptionController {
         log.warn("api Exception : {}", c.getErrorCode());
         return ResponseEntity.badRequest()
             .body(new ExceptionResponse(c.getMessage(), c.getErrorCode()));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ExceptionResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        BindingResult bindingResult = ex.getBindingResult();
+        StringBuilder errorMessage = new StringBuilder();
+
+        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            errorMessage.append(fieldError.getDefaultMessage()).append("; ");
+        }
+
+        log.warn("Validation Exception: {}", errorMessage);
+
+        return ResponseEntity.badRequest().body(new ExceptionResponse(errorMessage.toString(), VALIDATION_ERROR));
     }
 
     @Getter
