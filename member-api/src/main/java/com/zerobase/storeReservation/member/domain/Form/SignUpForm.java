@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class SignUpForm {
     @NotBlank(message = "필수 입력")
-    @Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$", message = "이메일 형식이 올바르지 않습니다.")
+    @Email(message = "이메일 형식에 맞게 입력해 주세요.")
     private String email;
 
     @NotBlank(message = "필수 입력")
