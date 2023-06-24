@@ -2,10 +2,13 @@ package com.zerobase.storeReservaion.reservation.exception;
 
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.VALIDATION_ERROR;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -36,6 +39,24 @@ public class ExceptionController {
         log.warn("Validation Exception: {}", errorMessage);
 
         return ResponseEntity.badRequest().body(new ExceptionResponse(errorMessage.toString(), VALIDATION_ERROR));
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<ExceptionResponse> handleExpiredJwtExceptions() {
+        ErrorCode errorCode = ErrorCode.TOKEN_EXPIRED;
+        String errorMessage = errorCode.getMessage();
+
+        ExceptionResponse response = new ExceptionResponse(errorMessage, errorCode);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(JsonParseException.class)
+    public ResponseEntity<ExceptionResponse> handleJsonParseException() {
+        ErrorCode errorCode = ErrorCode.INVALID_TOKEN;
+        String errorMessage = errorCode.getMessage();
+
+        ExceptionResponse response = new ExceptionResponse(errorMessage, errorCode);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @Getter
