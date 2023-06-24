@@ -30,8 +30,10 @@ public enum ErrorCode {
 
     NOT_CHECKIN_RESERVATION(HttpStatus.BAD_REQUEST, "예약된 상점을 이용 후 리뷰 등록 가능합니다."),
 
-    WRONG_ADDRESS(HttpStatus.BAD_REQUEST, "잘못된 주소입니다.주소를 확인해주세요.")
-    ;
+    WRONG_ADDRESS(HttpStatus.BAD_REQUEST, "잘못된 주소입니다.주소를 확인해주세요."),
+
+    TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "토큰이 만료되었습니다."),
+    INVALID_TOKEN(HttpStatus.BAD_REQUEST, "토큰형식이 올바르지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;
