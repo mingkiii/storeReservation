@@ -1,7 +1,7 @@
 ## 개요
 매장 테이블 예약 서비스 구현
 
-Use : Spring, Jpa, Mysql
+Use : Spring, Jpa, Mysql, openApi(https://www.vworld.kr/dev/v4dv_geocoderguide2_s001.do)
 
 목표 : 사용자가 매장을 방문할 때 미리 예약 서비스로 매장과 소비자에게 편의를 제공하는 서버를 구축한다.
 
