@@ -1,8 +1,7 @@
 package com.zerobase.storeReservation.member.service;
 
 import static com.zerobase.storeReservation.member.exception.ErrorCode.ALREADY_REGISTER_USER;
-import static com.zerobase.storeReservation.member.exception.ErrorCode.EMAIL_CHECK_FAIL;
-import static com.zerobase.storeReservation.member.exception.ErrorCode.PASSWORD_CHECK_FAIL;
+import static com.zerobase.storeReservation.member.exception.ErrorCode.LOGIN_FAIL;
 
 import com.zerobase.storeReservation.common.config.JwtAuthenticationProvider;
 import com.zerobase.storeReservation.common.type.MemberType;
@@ -41,10 +40,10 @@ public class UserService {
     public String userLoginToken(SignInForm form) {
         // 이메일이 존재하지 않으면 예외 발생
         User user = userRepository.findByEmail(form.getEmail())
-            .orElseThrow(() -> new CustomException(EMAIL_CHECK_FAIL));
+            .orElseThrow(() -> new CustomException(LOGIN_FAIL));
         // 비밀번호 일치하지 않으면 예외 발생
         if (!encoderUtil.matchPassword(form.getPassword(), user.getPassword(), encoder)) {
-            throw new CustomException(PASSWORD_CHECK_FAIL);
+            throw new CustomException(LOGIN_FAIL);
         }
 
         return provider.createToken(user.getEmail(), user.getId(), MemberType.USER);

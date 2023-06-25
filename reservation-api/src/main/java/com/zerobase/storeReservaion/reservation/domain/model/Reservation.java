@@ -2,6 +2,8 @@ package com.zerobase.storeReservaion.reservation.domain.model;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,11 +32,8 @@ public class Reservation extends BaseEntity{
 
     private LocalDateTime dateTime;
 
-    private boolean approval;
-
-    private boolean refuse;
-
-    private boolean checkIn;
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus status;
 
     @ManyToOne
     @JoinColumn(name = "store_id")
@@ -45,8 +44,7 @@ public class Reservation extends BaseEntity{
             .userId(userId)
             .store(store)
             .dateTime(requestDateTime)
-            .approval(false)
-            .checkIn(false)
+            .status(ReservationStatus.NONE)
             .build();
     }
 }
