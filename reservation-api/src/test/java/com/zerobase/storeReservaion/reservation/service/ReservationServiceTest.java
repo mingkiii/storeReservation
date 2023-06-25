@@ -5,9 +5,7 @@ import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_F
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_YOUR_STORE_RESERVATION;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.REQUEST_FAIL_FULL_RESERVATION;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.never;
@@ -17,6 +15,7 @@ import static org.mockito.Mockito.when;
 
 import com.zerobase.storeReservaion.reservation.domain.form.ReservationForm;
 import com.zerobase.storeReservaion.reservation.domain.model.Reservation;
+import com.zerobase.storeReservaion.reservation.domain.model.ReservationStatus;
 import com.zerobase.storeReservaion.reservation.domain.model.Store;
 import com.zerobase.storeReservaion.reservation.domain.repository.ReservationRepository;
 import com.zerobase.storeReservaion.reservation.domain.repository.StoreRepository;
@@ -162,8 +161,6 @@ class ReservationServiceTest {
             .build();
         Reservation reservation = Reservation.builder()
             .id(reservationId)
-            .approval(false)
-            .refuse(false)
             .store(store)
             .dateTime(LocalDateTime.now())
             .build();
@@ -181,8 +178,7 @@ class ReservationServiceTest {
             .findById(reservationId);
         verify(reservationRepository, times(1))
             .save(Objects.requireNonNull(reservation));
-        assertTrue(reservation.isApproval());
-        assertFalse(reservation.isRefuse());
+        assertEquals(ReservationStatus.APPROVED, reservation.getStatus());
         assertEquals("해당 예약을 승인하였습니다.", result);
     }
 
@@ -218,7 +214,6 @@ class ReservationServiceTest {
             .build();
         Reservation reservation = Reservation.builder()
             .id(reservationId)
-            .approval(false)
             .store(store)
             .dateTime(LocalDateTime.now())
             .build();
@@ -246,14 +241,12 @@ class ReservationServiceTest {
             .build();
         Reservation reservation = Reservation.builder()
             .id(reservationId)
-            .approval(false)
-            .refuse(false)
             .store(store)
             .dateTime(LocalDateTime.now())
             .build();
 
         when(reservationRepository.findById(reservationId))
-            .thenReturn(Optional.ofNullable(reservation));
+            .thenReturn(Optional.of(reservation));
         when(reservationRepository.save(
             ArgumentMatchers.any(Reservation.class))).thenReturn(reservation);
         // When
@@ -265,8 +258,7 @@ class ReservationServiceTest {
             .findById(reservationId);
         verify(reservationRepository, times(1))
             .save(Objects.requireNonNull(reservation));
-        assertTrue(reservation.isRefuse());
-        assertFalse(reservation.isApproval());
+        assertEquals(ReservationStatus.REFUSED, reservation.getStatus());
         assertEquals("해당 예약을 거절하였습니다.", result);
     }
 
@@ -283,7 +275,7 @@ class ReservationServiceTest {
             .build();
         Reservation reservation = Reservation.builder()
             .id(reservationId)
-            .checkIn(true)
+            .status(ReservationStatus.CHECKED_IN)
             .store(store)
             .dateTime(LocalDateTime.now())
             .build();

@@ -1,6 +1,7 @@
 package com.zerobase.storeReservaion.reservation.domain.dto;
 
 import com.zerobase.storeReservaion.reservation.domain.model.Reservation;
+import com.zerobase.storeReservaion.reservation.domain.model.ReservationStatus;
 import com.zerobase.storeReservaion.reservation.domain.model.Store;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -18,14 +19,14 @@ public class ReservationDto {
     private Long id;
     private Store store;
     private LocalDateTime dateTime;
-    private boolean approval;
+    private ReservationStatus status;
 
     public static ReservationDto from(Reservation reservation) {
         return ReservationDto.builder()
             .id(reservation.getId())
             .store(reservation.getStore())
             .dateTime(reservation.getDateTime())
-            .approval(reservation.isApproval())
+            .status(reservation.getStatus())
             .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.zerobase.storeReservaion.reservation.service;
 
+import static com.zerobase.storeReservaion.reservation.domain.model.ReservationStatus.CHECKED_IN;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.DIFFERENT_USERID;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_CHECKIN_RESERVATION;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_FOUND_RESERVATION;
@@ -43,7 +44,7 @@ public class ReviewService {
         Reservation reservation = reservationRepository.findById(reservationId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_RESERVATION));
         // 예약이 이용되지 않은 경우(상점 방문 안한 경우)
-        if (!reservation.isCheckIn()) {
+        if (!reservation.getStatus().equals(CHECKED_IN)) {
             throw new CustomException(NOT_CHECKIN_RESERVATION);
         }
         // 유저가 가진 예약이 아닌 경우

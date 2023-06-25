@@ -1,5 +1,8 @@
 package com.zerobase.storeReservaion.reservation.service;
 
+import static com.zerobase.storeReservaion.reservation.domain.model.ReservationStatus.APPROVED;
+import static com.zerobase.storeReservaion.reservation.domain.model.ReservationStatus.CHECKED_IN;
+import static com.zerobase.storeReservaion.reservation.domain.model.ReservationStatus.REFUSED;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.ALREADY_CHECKIN_RESERVATION;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_FOUND_RESERVATION;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_FOUND_STORE;
@@ -69,8 +72,11 @@ public class ReservationService {
         if (!Objects.equals(partnerId, reservation.getStore().getPartnerId())) {
             throw new CustomException(NOT_YOUR_STORE_RESERVATION);
         }
-        reservation.setApproval(true);
-        reservation.setRefuse(false);
+        // 이미 사용(방문)된 예약일 경우
+        if (reservation.getStatus() == CHECKED_IN) {
+            throw new CustomException(ALREADY_CHECKIN_RESERVATION);
+        }
+        reservation.setStatus(APPROVED);
         reservationRepository.save(reservation);
 
         return "해당 예약을 승인하였습니다.";
@@ -86,11 +92,10 @@ public class ReservationService {
             throw new CustomException(NOT_YOUR_STORE_RESERVATION);
         }
         // 이미 사용(방문)된 예약일 경우 거절 불가
-        if (reservation.isCheckIn()) {
+        if (reservation.getStatus() == CHECKED_IN) {
             throw new CustomException(ALREADY_CHECKIN_RESERVATION);
         }
-        reservation.setRefuse(true);
-        reservation.setApproval(false);
+        reservation.setStatus(REFUSED);
         reservationRepository.save(reservation);
 
         return "해당 예약을 거절하였습니다.";

@@ -2,8 +2,10 @@ package com.zerobase.storeReservaion.reservation.service;
 
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.DIFFERENT_STORE;
 import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.NOT_CHECKIN_AVAILABLE_TIME;
-import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.RESERVATION_NOT_APPROVED;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.zerobase.storeReservaion.reservation.exception.ErrorCode.RESERVATION_NOT_VALID;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -12,6 +14,7 @@ import static org.mockito.Mockito.when;
 
 import com.zerobase.storeReservaion.reservation.client.KioskClient;
 import com.zerobase.storeReservaion.reservation.domain.model.Reservation;
+import com.zerobase.storeReservaion.reservation.domain.model.ReservationStatus;
 import com.zerobase.storeReservaion.reservation.domain.model.Store;
 import com.zerobase.storeReservaion.reservation.domain.repository.ReservationRepository;
 import com.zerobase.storeReservaion.reservation.exception.CustomException;
@@ -44,10 +47,9 @@ class KioskServiceTest {
 
         Reservation reservation = Reservation.builder()
             .id(reservationId)
-            .approval(true)
+            .status(ReservationStatus.APPROVED)
             .store(Store.builder().id(storeId).build())
             .dateTime(LocalDateTime.of(2023,6,18,14,0))
-            .checkIn(false)
             .build();
 
         // Mock 객체 설정
@@ -58,7 +60,7 @@ class KioskServiceTest {
 
         // 결과 확인
         assertEquals("예약 체크인이 완료되었습니다.", result);
-        assertTrue(reservation.isCheckIn());
+        assertEquals(ReservationStatus.CHECKED_IN, reservation.getStatus());
         verify(reservationRepository, times(1)).findById(1L);
         verify(reservationRepository, times(1)).save(any(Reservation.class));
         verify(kioskClient, times(1)).sendCheckinNotification(1L, 1L);
@@ -74,10 +76,9 @@ class KioskServiceTest {
 
         Reservation reservation = Reservation.builder()
             .id(reservationId)
-            .approval(false) // 예약이 승인되지 않은 상태로 설정
+            .status(ReservationStatus.REFUSED) // 예약이 승인되지 않은 상태로 설정
             .store(Store.builder().id(storeId).build())
             .dateTime(LocalDateTime.of(2023,6,18,14,0))
-            .checkIn(false)
             .build();
 
         when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(reservation));
@@ -89,8 +90,9 @@ class KioskServiceTest {
         verify(reservationRepository, times(1)).findById(reservationId);
         verify(reservationRepository, never()).save(any(Reservation.class));
 
-        assertEquals(RESERVATION_NOT_APPROVED, exception.getErrorCode());
-        assertFalse(reservation.isCheckIn());
+        assertEquals(RESERVATION_NOT_VALID, exception.getErrorCode());
+        assertNotEquals(ReservationStatus.CHECKED_IN, reservation.getStatus());
+
     }
 
     @Test
@@ -104,10 +106,9 @@ class KioskServiceTest {
 
         Reservation reservation = Reservation.builder()
             .id(reservationId)
-            .approval(true)
+            .status(ReservationStatus.APPROVED)
             .store(Store.builder().id(otherStoreId).build())
             .dateTime(LocalDateTime.of(2023,6,18,14,0))
-            .checkIn(false)
             .build();
 
         when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(reservation));
@@ -120,7 +121,7 @@ class KioskServiceTest {
         verify(reservationRepository, never()).save(any(Reservation.class));
 
         assertEquals(DIFFERENT_STORE, exception.getErrorCode());
-        assertFalse(reservation.isCheckIn());
+        assertNotEquals(ReservationStatus.CHECKED_IN, reservation.getStatus());
     }
 
     @Test
@@ -133,10 +134,9 @@ class KioskServiceTest {
 
         Reservation reservation = Reservation.builder()
             .id(reservationId)
-            .approval(true)
+            .status(ReservationStatus.APPROVED)
             .store(Store.builder().id(storeId).build())
             .dateTime(LocalDateTime.of(2023,6,18,14,0))
-            .checkIn(false)
             .build();
 
         when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(reservation));
@@ -149,6 +149,6 @@ class KioskServiceTest {
         verify(reservationRepository, never()).save(any(Reservation.class));
 
         assertEquals(NOT_CHECKIN_AVAILABLE_TIME, exception.getErrorCode());
-        assertFalse(reservation.isCheckIn());
+        assertNotEquals(ReservationStatus.CHECKED_IN, reservation.getStatus());
     }
 }

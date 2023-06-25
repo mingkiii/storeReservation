@@ -14,6 +14,7 @@ import com.zerobase.storeReservaion.reservation.client.UserClient;
 import com.zerobase.storeReservaion.reservation.client.UserDto;
 import com.zerobase.storeReservaion.reservation.domain.form.ReviewForm;
 import com.zerobase.storeReservaion.reservation.domain.model.Reservation;
+import com.zerobase.storeReservaion.reservation.domain.model.ReservationStatus;
 import com.zerobase.storeReservaion.reservation.domain.model.Review;
 import com.zerobase.storeReservaion.reservation.domain.model.Store;
 import com.zerobase.storeReservaion.reservation.domain.repository.ReservationRepository;
@@ -60,7 +61,7 @@ class ReviewServiceTest {
 
         Reservation reservation = Reservation.builder()
             .id(reservationId)
-            .checkIn(true)
+            .status(ReservationStatus.CHECKED_IN)
             .userId(userId)
             .store(Store.builder().id(1L).reviewCount(10L).rating(4.0).build())
             .build();
@@ -98,7 +99,7 @@ class ReviewServiceTest {
 
         Reservation reservation = Reservation.builder()
             .id(reservationId)
-            .checkIn(false)
+            .status(ReservationStatus.APPROVED)
             .store(Store.builder().id(1L).reviewCount(10L).rating(4.0).build())
             .build();
 
@@ -131,7 +132,8 @@ class ReviewServiceTest {
 
         Reservation reservation = Reservation.builder()
             .id(reservationId)
-            .checkIn(true)
+            .userId(userId)
+            .status(ReservationStatus.CHECKED_IN)
             .store(Store.builder().id(1L).reviewCount(10L).rating(4.0).build())
             .build();
 
