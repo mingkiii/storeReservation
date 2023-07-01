@@ -28,10 +28,13 @@ public class Partner extends BaseEntity{
     @Column(unique = true)
     private String email; // 이메일을 로그인 아이디로 사용
 
+    @Column
     private String name;
 
+    @Column
     private String password;
 
+    @Column
     private String phone;
 
     public static Partner of(SignUpForm form, String encodedPassword) {
