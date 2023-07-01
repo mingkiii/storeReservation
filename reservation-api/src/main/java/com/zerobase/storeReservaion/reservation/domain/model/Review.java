@@ -1,6 +1,7 @@
 package com.zerobase.storeReservaion.reservation.domain.model;
 
 import com.zerobase.storeReservaion.reservation.domain.form.ReviewForm;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,12 +27,16 @@ public class Review extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private Long userId;
 
+    @Column
     private String userName;
 
+    @Column
     private double rating;
 
+    @Column
     private String text;
 
     @ManyToOne

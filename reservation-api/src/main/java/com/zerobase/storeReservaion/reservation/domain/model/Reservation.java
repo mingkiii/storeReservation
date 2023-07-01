@@ -1,6 +1,7 @@
 package com.zerobase.storeReservaion.reservation.domain.model;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -28,10 +29,13 @@ public class Reservation extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private Long userId;
 
+    @Column
     private LocalDateTime dateTime;
 
+    @Column
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 

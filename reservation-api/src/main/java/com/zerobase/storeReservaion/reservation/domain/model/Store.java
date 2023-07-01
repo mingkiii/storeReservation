@@ -1,6 +1,7 @@
 package com.zerobase.storeReservaion.reservation.domain.model;
 
 import com.zerobase.storeReservaion.reservation.domain.form.AddStoreForm;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,19 +25,27 @@ public class Store extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private Long partnerId;
 
+    @Column
     private String name;
 
+    @Column
     private String address;
 
+    @Column
     private String text;
 
+    @Column
     private double rating;
 
+    @Column
     private Long reviewCount;
 
+    @Column
     private double latitude;
+    @Column
     private double longitude;
 
     public static Store of(Long partnerId, AddStoreForm form, double lat, double lon) {
